@@ -1,10 +1,20 @@
 //const exactJS = await import('https://api.exactpaysandbox.com/js/v1/exact.js')
 import styles from '../styles/Home.module.css'
+import { useState } from 'react'
+import { useCartState } from '../util/useCartState'
 export default function Checkout() {
+    const [items, setItems] = useState(useCartState().items)
+
+    const getFormattedPrice = () => {
+        return "$" + (items.length*10) + ".00"
+
+    }
+    
     return (
         <main className={styles.main}>
         <div>
 
+        <h3>Your Order Total: {getFormattedPrice()}</h3>
         <form id="myForm" action="api/notYetImplemented" method="post" >
             <div>
                 <label htmlFor="email">Email address</label>

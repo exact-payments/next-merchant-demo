@@ -28,11 +28,19 @@ export default  function Checkout() {
     const [items, setItems] = useState(useCartState().items)
     let exact : Exact;
 
+    const getTotalPrice = () => {
+        return  items.length * 100
+    }
+
+    const getFormattedPrice = () => {
+        return "$" + (items.length*10) + ".00"
+    }
+
     const  onExactJSReady = () => {
-        const totalPrice =  items.length * 100 //Price is in cents
+         //Price is in cents
         const url = process.env.NEXT_PUBLIC_BASE_URL + '/api/postOrders'
         axios.post(url, {
-        amount: totalPrice,
+        amount: getTotalPrice(),
     }).then(
          (response) => {
             exact = ExactJS(response.data.token)
@@ -61,7 +69,7 @@ export default  function Checkout() {
         
         <Script src="https://api.exactpaysandbox.com/js/v1/exact.js" strategy="afterInteractive" onReady={onExactJSReady}/>
 
-        
+        <h3>Your Order Total: {getFormattedPrice()}</h3>
         <div>
         <form id="myForm" action="api/receivePaymentId" method="post"  onSubmit={handleSubmit}>
             <div>
