@@ -1,9 +1,11 @@
 import { useCartState } from "../util/useCartState"
+
+import styles from '../styles/Home.module.css'
+
 import Script from 'next/script'
 import axios from 'axios'
 import { useState, FormEvent } from "react"
-import styles from '../styles/Home.module.css'
-
+import { MutatingDots } from "react-loader-spinner"
 
 declare global {
     let ExactJS: (key : string) => Exact;
@@ -36,6 +38,12 @@ export default  function Checkout() {
         return "$" + (items.length*10) + ".00"
     }
 
+    const setOrderPosted = () => {
+    (document.getElementById('hideable')! as HTMLInputElement).className = "";
+    (document.getElementById('loading')! as HTMLInputElement).className = styles.hidden;
+}
+    
+
     const  onExactJSReady = () => {
          //Price is in cents
         const url = process.env.NEXT_PUBLIC_BASE_URL + '/api/postOrders'
@@ -46,6 +54,7 @@ export default  function Checkout() {
             exact = ExactJS(response.data.token)
             const components = exact.components({orderId: response.data.orderId});
             components.addCard('cardElement');
+            setTimeout(setOrderPosted, 600);
         })
     }
 
@@ -62,15 +71,22 @@ export default  function Checkout() {
             })
     .catch(err => console.error(err));
     }
-    
     return (
-        <>
-        <main className={styles.main}>
-        
-        <Script src="https://api.exactpaysandbox.com/js/v1/exact.js" strategy="afterInteractive" onReady={onExactJSReady}/>
 
+    
+    <main className={styles.main}>
         <h3>Your Order Total: {getFormattedPrice()}</h3>
-        <div>
+        <div id="loading">
+        <MutatingDots 
+                height="100"
+                width="100"
+                color="#4fa94d"
+                secondaryColor= '#4fa94d'
+                radius='12.5'
+                ariaLabel="mutating-dots-loading"/>
+            <Script src="https://api.exactpaysandbox.com/js/v1/exact.js" strategy="afterInteractive" onReady={onExactJSReady}/>
+        </div>
+        <div id="hideable" className={styles.hidden}>
         <form id="myForm" action="api/receivePaymentId" method="post"  onSubmit={handleSubmit}>
             <div>
                 <label htmlFor="email">Email address</label>
@@ -113,8 +129,8 @@ export default  function Checkout() {
             </div>
         </form>
         </div>
-        </main>
-        </>
+    </main>
+    
     )
         
     
