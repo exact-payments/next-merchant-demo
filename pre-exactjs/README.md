@@ -32,8 +32,9 @@ A straightforward landing page:
 
 - displays a header & copy
 - displays a grid of `StoreItems`
-- displays a `Cart` instance containing `StoreItems`
+- displays a `Cart` containing `StoreItems`
 - displays a checkout button
+- displays a clear cart button
 
 #### `checkout.tsx`
 A straightforward form
@@ -54,8 +55,15 @@ Uses `cartState()` to return a display of each item in the cart
 #### `CheckoutButton.tsx`
 Uses `cartState()` to determine if the cart has items, if it does it displays a link to `/checkout/`
 
+#### `ClearCartButton.tsx`
+Uses `cartState()` to determine if the cart has items, if it does it provides the a button to clear it
+
+#### `OrderTotal.tsx`
+Uses `cartState()` to determine the current value of cart items and displays that in format $XX.xx
+
 #### `StoreItem.tsx`
 An item in the store is represented as an image. If the item is clicked it is added to the `cartState()`
+
 ### `utils/`
 #### `useCartState.tsx`
 A [zustand](https://www.npmjs.com/package/zustand) store that tracks cart state throughout the app.

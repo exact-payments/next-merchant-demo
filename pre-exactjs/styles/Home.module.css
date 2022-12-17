@@ -67,7 +67,9 @@
   justify-content: top;
   position: relative;
   right: 0%;
-  min-height: 48rem;
+  min-height: 20rem;
+  border: 5px solid rgba(29, 115, 70, 0.623);
+  padding: 1rem;
 }
 
 .cartgrid{
@@ -137,4 +139,7 @@
   }
 }
 
+.hidden{
+  display: none
+}
 
