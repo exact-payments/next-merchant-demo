@@ -3,11 +3,11 @@ import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import { FC } from 'react'
 
-const CheckoutButton : FC<{}> = () => {
+const ClearCartButton : FC<{}> = () => {
     const store = useCartState()
     const isEmpty = store.items.length == 0
     return (
-      isEmpty ? <></> : <Link href= "checkout" className={styles.card}>Checkout</Link>
+      isEmpty ? <></> : <button onClick= {store.removeAllItems} className={styles.card}>Clear Cart</button>
     )
   }
-export default CheckoutButton  
+export default ClearCartButton  

@@ -4,8 +4,10 @@ import styles from '../styles/Home.module.css'
 
 import Script from 'next/script'
 import axios from 'axios'
-import { useState, FormEvent } from "react"
+import { useState, FormEvent, useEffect } from "react"
 import { MutatingDots } from "react-loader-spinner"
+import { useRouter } from "next/router"
+import OrderTotal from "../components/OrderTotal"
 
 declare global {
     let ExactJS: (key : string) => Exact;
@@ -60,7 +62,7 @@ interface ExactPaymentForm extends HTMLFormElement{
 }
 
 export default  function Checkout() {
-    const [items, setItems] = useState(useCartState().items)
+    const items = useCartState().items
     let exact : Exact;
 
     
@@ -69,9 +71,7 @@ export default  function Checkout() {
         return  items.length * 100
     }
 
-    const getFormattedPrice = () => {
-        return "$" + (items.length*10) + ".00"
-    }
+    
 
     const setOrderPosted = () => {
     (document.getElementById('hideable')! as HTMLInputElement).className = "";
@@ -119,11 +119,19 @@ export default  function Checkout() {
             })
     .catch(err => console.error(err));
     }
-    return (
 
-    
+    //Prevent checkout with empty
+    const router = useRouter()
+    useEffect(() => {
+        if (!getTotalPrice()){
+            router.push('/')
+        }
+    })
+
+
+    return (
     <main className={styles.main}>
-        <h3>Your Order Total: {getFormattedPrice()}</h3>
+        <OrderTotal/>
         <div id="loading">
             <MutatingDots height="100" width="100" color="#4fa94d" secondaryColor= '#4fa94d' radius='12.5' ariaLabel="mutating-dots-loading"/>
 

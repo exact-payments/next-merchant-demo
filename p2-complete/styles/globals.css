@@ -92,3 +92,8 @@ label{
   color: rgba(55,65,81,var(--tw-text-opacity));
   --tw-text-opacity: 1;
 }
+
+button {
+  font-size: 1rem;
+  background-color:#fff;
+}

@@ -6,6 +6,8 @@ import styles from '../styles/Home.module.css'
 import Cart from '../components/Cart'
 import  StoreItem  from '../components/StoreItem'
 import CheckoutButton from '../components/CheckoutButton'
+import ClearCartButton from '../components/ClearCartButton'
+import OrderTotal from '../components/OrderTotal'
 
 
 
@@ -40,18 +42,17 @@ export default function Home() {
           <StoreItem itemnum={"04"}/>
           <StoreItem itemnum={"05"}/>
           <StoreItem itemnum={"06"}/>
-
-
-
         </div>
       </main>
       <main className={styles.cart}>
-        <h1 >Cart</h1>
+        <h1 >Cart</h1> 
+        <OrderTotal/>
         <div className={styles.cartgrid}>
           <Cart/>
         </div>
         <div className={styles.checkout}>
         <CheckoutButton/>
+        <ClearCartButton/>
         </div>
 
       </main>
