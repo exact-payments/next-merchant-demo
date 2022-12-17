@@ -18,8 +18,15 @@ input[type=text], select {
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: .375rem;
-  box-sizing: border-box;
   font-size: 1rem;
+  box-sizing: border-box;
+  background-color: #fff;
+  padding-left: .75rem;
+  padding-right: .75rem;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  font-weight: 400;
+  color: #000;
 }
 
 input[type=email], select {
@@ -31,7 +38,18 @@ input[type=email], select {
   border-radius: .375rem;
   font-size: 1rem;
   box-sizing: border-box;
+  background-color: #fff;
+  padding-left: .75rem;
+  padding-right: .75rem;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  font-weight: 400;
+  color: #000;
+
+
+
 }
+
 
 input[type=submit] {
   width: 100%;

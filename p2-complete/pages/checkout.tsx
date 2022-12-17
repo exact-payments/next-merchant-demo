@@ -11,14 +11,16 @@ declare global {
     let ExactJS: (key : string) => Exact;
   }
 type Exact = {
-    components : (order : {orderId : string}) => Component
-    payOrder : () => Promise<string>;
-
+    components : (order : {orderId : string}) => Component,
+    payOrder : () => Promise<string>,
+    on : (event : string, fc: (action :string) => void) => void,
 }
 type Component =  {
     addCard : (divName : string, payload? : {"style"? : Styling, "wallets"? :boolean, label?: Label }) => void;
     addComponent : () => void;
 }
+
+
 type Label = {
     //Labels
     position: "above" | "inside" | "none"
@@ -61,6 +63,8 @@ export default  function Checkout() {
     const [items, setItems] = useState(useCartState().items)
     let exact : Exact;
 
+    
+      
     const getTotalPrice = () => {
         return  items.length * 100
     }
@@ -96,8 +100,7 @@ export default  function Checkout() {
                     //     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;",
                     //     color: "#000000"
                     // }
-    }
-            });
+                }});
             setTimeout(setOrderPosted, 600);
         })
     }
@@ -109,6 +112,7 @@ export default  function Checkout() {
         exact.payOrder()
             .then(payment_id => {
                 // add the payment id to your form
+
             (document.getElementById('payment_id')! as HTMLInputElement).value  = payment_id
 
             form.submit()
@@ -152,7 +156,7 @@ export default  function Checkout() {
             </div>
 
             <div>
-                <label htmlFor="province">Province</label>
+                <label htmlFor="province">State</label>
                 <input type="text" id="province" name="province" />
             </div>
 
