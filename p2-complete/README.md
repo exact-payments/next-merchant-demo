@@ -5,8 +5,8 @@ The checkout page displays a form which uses ExactJS, the payments are then rout
 ## Running the Application
 ### Environment
 This program requires a `.env.local` with the following: 
-- P1_API_KEY: if you do not have this please speak with sales or visit https://provisioning.exactpaysandbox.com/signup
-- P1_GATEWAY_ID: this can be found by going to https://admin.exactpaysandbox.com/terminal under the **Gateway** column
+- P2_ACCOUNT_ID: Your Account ID
+- ORGANIZATION_APP_TOKEN: An application token generated for the Exact Payments API
 - NEXT_PUBLIC_BASE_URL: set to `http://localhost:3000` for local development- something else if you are deploying somewhere.
 ```bash
 npm run dev
@@ -81,7 +81,11 @@ The form calls `handleSubmit()` when submitted and `api/receivePaymentId` when t
 #### `paid.tsx`
 A straightforward post-payment screen.
 
-For the purpose of demonstration we render payment information by making an api call to `api/demoPaymentInformation`
+**OPTIONAL:**
+
+For the purpose of demonstration we render payment information by making an api call to `api/demoPaymentInformation`.
+
+We do this dynamically with `ssr:false` to avoid issues with hydration due to the crude nature of this implementation
 
 #### `_app.tsx`
 Used by nextJS to package and create our application.
@@ -106,15 +110,13 @@ We print payment object to indicate that the payment has succesfully been proces
 We redirect the user to the `/paid` page
 
 #### `displayPaymentInformation.ts`
-Demo function to display payment information via Exact Pay Payments API
+**NOTE: This function is completely present ONLY for demonstration purposes and COMPLETELY OPTIONAL**
+
+This method and functionality is provided as a simple way of viewing payment information in the browser.
+Do not display this information to the customer post payment.
+Do not use an environment variable and instead use a secure database to store payment information.
 
 We use the most recent value of `paymentInfo` sent to the server to make a GET request to [`account/{accountId}/payments/{paymentId}`] (https://developer.exactpay.com/api#/paths/account-accountId--payments--paymentId/get)
-
-**NOTE: This function is completely optional and present ONLY for demonstration purposes**
-This method and functionality is provided as a simple way of viewing payment information in the browser.
-It is obviously very ill advised to display this information to the customer post payment.
-Obviously one should not use an environment variable and instead use a secure database to store payment information.
-
 
 ### `components/`
 #### `Cart.tsx`
