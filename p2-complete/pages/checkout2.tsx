@@ -26,10 +26,9 @@ export default  function Checkout() {
     }
     
     const  onExactJSReady = () => {
-         //Price is in cents
         const url = process.env.NEXT_PUBLIC_BASE_URL + '/api/postOrders'
         axios.post(url, {
-        amount: getTotalPrice(),
+        amount: getTotalPrice(), //Price is in cents
     }).then(
          (response) => {
             exact = ExactJS(response.data.token)
@@ -102,8 +101,9 @@ export default  function Checkout() {
 
             <Script src="https://api.exactpaysandbox.com/js/v1/exact.js" strategy="afterInteractive" onReady={onExactJSReady}/>
         </div>
+        
         <div id="hideable" className={styles.hidden}>
-        <form id="myForm" action="api/receivePaymentId" method="post"  onSubmit={handleSubmit}>
+        <form id="myForm" action="api/receivePaymentId" method="post" onSubmit={handleSubmit}>
             <div>
                 <label htmlFor="email">Email Address</label>
                 <input type="email" id="email" name="email" autoComplete="email" />
@@ -149,7 +149,7 @@ export default  function Checkout() {
         </div>
     </main>
     </>
-    
+
     )
 }
 
