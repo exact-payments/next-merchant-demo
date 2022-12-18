@@ -1,30 +1,13 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
+import { PaymentInfo } from '../types';
 const fetchPaymentInfo = async () => {
     const response = await axios.get(process.env.NEXT_PUBLIC_BASE_URL + '/api/demoPaymentInformation');
     return response.data;
 };
-type PaymentInfo = {
 
-    id: string;
-    paymentId: string;
-    terminalId: string;
-    merchantId: string;
-    accountId: string;
-    type: string;
-    status: string;
-    approved: boolean;
-    captured: boolean;
-    voided: boolean;
-    refunded: boolean;
-    settled: boolean;
-    amount: number;
-    sentToBank: boolean;
-    createdAt: string;
-
-};
-export const PaymentInfoBox = () => {
+ const PaymentInfoBox = () => {
     const [paymentInfo, setPaymentInfo] = useState({} as PaymentInfo);
 
 
@@ -53,3 +36,4 @@ export const PaymentInfoBox = () => {
         <code>createdAt: {paymentInfo.createdAt}</code><br></br>
     </>);
 };
+export default PaymentInfoBox

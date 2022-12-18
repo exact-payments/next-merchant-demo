@@ -2,11 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
 import {AxiosRequestConfig} from 'axios'
 
-
-type Data = {
-  token: string,
-  orderId : string
-}
+import {Data} from '../../types'
 
 
 export default async function handler(

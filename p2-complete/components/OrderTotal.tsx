@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { useCartState } from "../util/useCartState"
 
 const OrderTotal = () => {

@@ -21,15 +21,15 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 `pages/api/` runs on the backend
 
- `pages/` runs in the browser
+`pages/` runs in the browser
 
- `components/` contains react components
+`components/` contains react components
 
- `util/` contains utility functions used by components
+`util/` contains utility functions used by components
 
- `public/` provides static public assets (images in this case)
+`public/` provides static public assets (images in this case)
 
- `styles/` provides css styles to be imported
+`styles/` provides css styles to be imported
 
 
 ### `pages/`
@@ -40,6 +40,7 @@ A straightforward landing page:
 - displays a grid of `StoreItems`
 - displays a `Cart` instance containing `StoreItems`
 - displays a checkout button
+- displays a clear cart button
 
 #### `checkout.tsx`
 Displays a form with ExactJS card payments integration.
@@ -80,6 +81,8 @@ The form calls `handleSubmit()` when submitted and `api/receivePaymentId` when t
 #### `paid.tsx`
 A straightforward post-payment screen.
 
+For the purpose of demonstration we render payment information by making an api call to `api/demoPaymentInformation`
+
 #### `_app.tsx`
 Used by nextJS to package and create our application.
 
@@ -96,9 +99,22 @@ Called after a succesful payment is submitted to the Exact Pay Sandbox Payments 
 
 This is a placeholder function, you may want to save the payment to your server, or do some other post-payment backend action.
 
+For the purpose of this demo, we save `paymentInfo` to an environment variable, so we can display it with `api/demoPaymentInformation`
+
 We print payment object to indicate that the payment has succesfully been processed.
 
 We redirect the user to the `/paid` page
+
+#### `displayPaymentInformation.ts`
+Demo function to display payment information via Exact Pay Payments API
+
+We use the most recent value of `paymentInfo` sent to the server to make a GET request to [`account/{accountId}/payments/{paymentId}`] (https://developer.exactpay.com/api#/paths/account-accountId--payments--paymentId/get)
+
+**NOTE: This function is completely optional and present ONLY for demonstration purposes**
+This method and functionality is provided as a simple way of viewing payment information in the browser.
+It is obviously very ill advised to display this information to the customer post payment.
+Obviously one should not use an environment variable and instead use a secure database to store payment information.
+
 
 ### `components/`
 #### `Cart.tsx`
@@ -107,8 +123,17 @@ Uses `cartState()` to return a display of each item in the cart.
 #### `CheckoutButton.tsx`
 Uses `cartState()` to determine if the cart has items, if it does it displays a link to `/checkout/`.
 
+#### `ClearCartButton.tsx`
+Uses `cartState()` to determine if the cart has items, if it does it provides the a button to clear it.
+
+#### `OrderTotal.tsx`
+Uses `cartState()` to determine the current value of cart items and displays that in format $XX.xx.
+
+#### `PaymentInfoBox.tsx`
+Makes a call to `api/demoPaymentInformation` to display payment information for the purpose of this demo.
+
 #### `StoreItem.tsx`
-An item in the store is represented as an image. If the item is clicked it is added to the `cartState()`.
+An item in the store is represented as an image. If the item is clicked it is added to the cart.
 ### `utils/`
 #### `useCartState.tsx`
 A [zustand](https://www.npmjs.com/package/zustand) store that tracks cart state throughout the app.

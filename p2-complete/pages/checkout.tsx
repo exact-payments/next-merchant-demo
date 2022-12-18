@@ -9,57 +9,7 @@ import { MutatingDots } from "react-loader-spinner"
 import { useRouter } from "next/router"
 import OrderTotal from "../components/OrderTotal"
 
-declare global {
-    let ExactJS: (key : string) => Exact;
-  }
-type Exact = {
-    components : (order : {orderId : string}) => Component,
-    payOrder : () => Promise<string>,
-    on : (event : string, fc: (action :string) => void) => void,
-}
-type Component =  {
-    addCard : (divName : string, payload? : {"style"? : Styling, "wallets"? :boolean, label?: Label }) => void;
-    addComponent : () => void;
-}
-
-
-type Label = {
-    //Labels
-    position: "above" | "inside" | "none"
-}
-type Styling = {
-    
-    default: Style,
-    error?: Style,
-    
-}
-type Style = {
-    //General Styling
-    padding? : string,
-    color? : string,
-    fontFamily? : string,
-    fontSize? : string,
-    fontWeight? : string,
-    textAlign? : string,
-    textTransform? : string,
-    textShadow? : string,
-    fontStyle? :string,
-
-    //Input Styling
-    backgroundColor? : string,
-    border? : string,
-    borderRadius? : string,
-    borderWidth? : string,
-    borderColor? : string,
-
-    
-}
-
-interface ExactPaymentForm extends HTMLFormElement{
-    closest : (form_name: string) => {
-        submit : () => void
-    }
-}
+import {Exact, ExactPaymentForm } from '../types'
 
 export default  function Checkout() {
     const items = useCartState().items

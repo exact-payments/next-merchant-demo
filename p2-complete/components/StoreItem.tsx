@@ -5,8 +5,8 @@ import { useCartState } from '../util/useCartState';
 
 type StoreItemProps = {
   itemnum: string;
-
 };
+
 export const StoreItem: FC<StoreItemProps> = (props: StoreItemProps) => {
   const store = useCartState();
   const handleOnClick = () => {

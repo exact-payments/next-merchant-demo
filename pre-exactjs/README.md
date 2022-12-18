@@ -56,13 +56,13 @@ Uses `cartState()` to return a display of each item in the cart
 Uses `cartState()` to determine if the cart has items, if it does it displays a link to `/checkout/`
 
 #### `ClearCartButton.tsx`
-Uses `cartState()` to determine if the cart has items, if it does it provides the a button to clear it
+Uses `cartState()` to determine if the cart has items, if it does it provides the a button to clear it.
 
 #### `OrderTotal.tsx`
-Uses `cartState()` to determine the current value of cart items and displays that in format $XX.xx
+Uses `cartState()` to determine the current value of cart items and displays that in format $XX.xx.
 
 #### `StoreItem.tsx`
-An item in the store is represented as an image. If the item is clicked it is added to the `cartState()`
+An item in the store is represented as an image. If the item is clicked it is added to the cart.
 
 ### `utils/`
 #### `useCartState.tsx`

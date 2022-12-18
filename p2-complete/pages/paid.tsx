@@ -1,7 +1,11 @@
 import Link from 'next/link'
 import styles from 'styles/Home.module.css'
-import { PaymentInfoBox } from '../components/PaymentInfoBox'
+import PaymentInfoBox from '../components/PaymentInfoBox'
+import dynamic from 'next/dynamic'
 
+const DynamicPaymentInfoBox = dynamic(() => import('../components/PaymentInfoBox') ,{
+    ssr: false
+})
 export default function Paid () {
     return (<>
         <main className={styles.main}>
@@ -15,7 +19,7 @@ export default function Paid () {
             Displaying payment details for demonstration
             </p>
             <p>
-            <PaymentInfoBox/>
+            <DynamicPaymentInfoBox/>
             </p>
             <h1>
             <Link href='/'>Return to our homepage</Link>
