@@ -1,5 +1,10 @@
-## Merchant Demo (no ExactJS)
+# Plant Shop Template (no ExactJS)
 This is a template app for Exact's Plant Shop allowing users to add plants to a cart and proceed to a checkout page. The checkout page displays a form with no card section- that displays a not implemented page if they attempt to checkout.
+
+
+You can view a demo of this application running at: 
+https://noexactjs-demo.merchant-portal.one/
+
 
 ## Running the Application
 ```bash

@@ -1,6 +1,6 @@
 repo housing open source examples for ExactJS merchant demo integration
 
-`pre-exactjs/` is a site without any payments page integrated, for use in the tutorial
+`plant-shop-template/` is a site without any payments page integrated, for use in the tutorial
 [demo](https://noexactjs-demo.merchant-portal.one/)
 
 
