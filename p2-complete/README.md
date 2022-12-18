@@ -8,6 +8,8 @@ This program requires a `.env.local` with the following:
 - P2_ACCOUNT_ID: Your Account ID
 - ORGANIZATION_APP_TOKEN: An application token generated for the Exact Payments API
 - NEXT_PUBLIC_BASE_URL: set to `http://localhost:3000` for local development- something else if you are deploying somewhere.
+
+Run the following to start a development instance of the app.
 ```bash
 npm run dev
 # or
@@ -45,11 +47,8 @@ A straightforward landing page:
 #### `checkout.tsx`
 Displays a form with ExactJS card payments integration.
 
-##### TypeScript Declarations
-The file begins with `global` declaration for ExactJS to work with TypeScript, as well as type and interface declarations for ExactJS since we are loading it via a `<Script>` tag.
-
 ##### Checkout()
-The rest of the logic is inside of the `Checkout()` , we begin by initializing our items an create a variable `exact` to be assigned on Script Load.
+We begin by initializing our items an create a variable `exact` to be assigned on Script Load. We hide our form while ExactJS loads, and display a loading icon.
 
 ##### onExactJSReady()
 This function is called after ExactJS is loaded. This is executed when a user goes the checkout page, before a user actually pays.
@@ -61,6 +60,8 @@ Our backend communicates with the Exact Payments Sandbox and responds with a Ord
 We initialize ExactJS using the access token and assign it to variable `exact`.
 
 We add the Card Component to an empty div called `cardElement`, which now displays a secure card entry form.
+
+We then update the CSS to display our form and hide our loading icon after waiting 600ms to minimize pop-in.
 
 ##### handleSubmit(event)
 Called by our form when submitted.
@@ -74,9 +75,14 @@ We then call `exact.payOrder()` which returns a Promise with a `payment_id`.
 ##### return
 We are loading ExactJS here via a `<Script>` tag, and calling `onExactJSReady()` on script load.
 
-We display a form with sections for email address, street address, apartment, city, province, postal code.
+We display a loading icon, to dissapear after ExactJS loads.
+
+We display a form with sections for email address, street address, apartment, city, province, postal code. The form is initially hidden.
 
 The form calls `handleSubmit()` when submitted and `api/receivePaymentId` when the payment is completed.
+
+##### router + useEffect
+We send the user back to the index page if they are in an illegal state for checkout (no items in cart -> no totalPrice to send to ExactJS)
 
 #### `paid.tsx`
 A straightforward post-payment screen.
