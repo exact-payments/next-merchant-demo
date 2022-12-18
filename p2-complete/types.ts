@@ -8,7 +8,7 @@ export type Exact = {
 }
 export type Component =  {
     addCard : (divName : string, payload? : {"style"? : Styling, "wallets"? :boolean, label?: Label }) => void;
-    addComponent : () => void;
+    addComponent : (divName : string, divId: string, payload? : {"style"? : Styling, "wallets"? :boolean, label?: Label }) => void;
 }
 
 

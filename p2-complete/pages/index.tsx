@@ -8,11 +8,13 @@ import CheckoutButton from '../components/CheckoutButton'
 import ClearCartButton from '../components/ClearCartButton'
 import OrderTotal from '../components/OrderTotal'
 
+import Switch from "react-switch";
+import { useState } from 'react'
 
 
 export default function Home() {
 
-
+  let [altCheckoutSelected, setAltCheckoutSelected] = useState(false);
   return (
     <div className={styles.container}>
       <Head>
@@ -49,10 +51,16 @@ export default function Home() {
         <div className={styles.cartgrid}>
           <Cart/>
         </div>
-        <div className={styles.checkout}>
-        <CheckoutButton/>
-        <ClearCartButton/>
+        <div className={styles.switch}>
+          <Switch checked={altCheckoutSelected} onChange={setAltCheckoutSelected} onColor='7ac833' offColor= '000000' activeBoxShadow='7ac833' uncheckedIcon={false} checkedIcon={false}/>
+          <p className={altCheckoutSelected ? styles.switchlabelgreen :'' }>Alternate Checkout UI</p>
         </div>
+        <div className={styles.checkout}>
+          <CheckoutButton link= {altCheckoutSelected ? 'checkout2' : 'checkout'} />
+          <ClearCartButton/>
+        </div>
+        
+
 
       </main>
 

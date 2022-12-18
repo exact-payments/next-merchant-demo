@@ -143,3 +143,28 @@
   display: none
 }
 
+.carddivwrapper{
+  display: grid;
+  columns: 2;
+}
+
+.carddiv{
+  grid-column: span 2;
+  margin-bottom: -.25rem;
+}
+
+.switch{
+  padding-left: 1rem;
+  padding-top: 1rem;
+  margin-bottom: -2.5rem;
+  display: flex;
+}
+
+.switch p{
+  position: flex;
+  padding-left: 3.5rem;
+  margin-top: .25rem;
+}
+.switchlabelgreen{
+  color: #7ac833;
+}
