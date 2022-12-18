@@ -42,15 +42,17 @@ A straightforward landing page:
 - displays a clear cart button
 
 #### `checkout.tsx`
-A straightforward form
+A straightforward form.
 
-The form is not connected to anything in this project, see p1-complete or p2-complete for implementation
+Router to ensure that the cart is not empty at checkout.
+
+The form is not connected to anything in this project, see p2-complete for implementation
 
 #### `_app.tsx`
 Used by nextJS to package and create our application
 
 ### `api/`
-The api is not implemented, see p1-complete or p2-complete for implementation
+The api is not implemented, see p2-complete for implementation
 
 
 ### `components/`
