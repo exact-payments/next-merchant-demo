@@ -44,6 +44,7 @@ A straightforward landing page:
 - displays a header & copy
 - displays a grid of `StoreItems`
 - displays a `Cart` instance containing `StoreItems`
+- displays a switch to select between checkout pages
 - displays a checkout button
 - displays a clear cart button
 
@@ -86,6 +87,9 @@ The form calls `handleSubmit()` when submitted and `api/receivePaymentId` when t
 
 ##### router + useEffect
 We send the user back to the index page if they are in an illegal state for checkout (no items in cart -> no totalPrice to send to ExactJS)
+
+#### `checkout2.tsx`
+A copy of the checkout page, but with a bullet ui created by setting individual elements.
 
 #### `paid.tsx`
 A straightforward post-payment screen.

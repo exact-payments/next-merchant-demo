@@ -90,6 +90,11 @@ export default  function Checkout() {
     })
 
     return (
+    <>
+    <div className={styles.checkoutdisclaimer}>
+        <h1>Demonstration only.</h1>
+        <h2><a href="https://developer.exactpay.com/docs/test-cards/" target="_blank">TEST CARDS</a></h2>
+    </div>
     <main className={styles.main}>
         <OrderTotal/>
         <div id="loading">
@@ -143,6 +148,8 @@ export default  function Checkout() {
         </form>
         </div>
     </main>
+    </>
+    
     )
 }
 
