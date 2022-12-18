@@ -14,7 +14,7 @@ import { useState } from 'react'
 
 export default function Home() {
 
-  let [altCheckoutSelected, setAltCheckoutSelected] = useState(false);
+  const [altCheckoutSelected, setAltCheckoutSelected] = useState(false);
   return (
     <div className={styles.container}>
       <Head>
@@ -52,7 +52,7 @@ export default function Home() {
           <Cart/>
         </div>
         <div className={styles.switch}>
-          <Switch checked={altCheckoutSelected} onChange={setAltCheckoutSelected} onColor='7ac833' offColor= '000000' activeBoxShadow='7ac833' uncheckedIcon={false} checkedIcon={false}/>
+          <Switch checked={altCheckoutSelected} onChange={setAltCheckoutSelected} onColor='#7ac833' offColor= '#000000' activeBoxShadow='7ac833' uncheckedIcon={false} checkedIcon={false}/>
           <p className={altCheckoutSelected ? styles.switchlabelgreen :'' }>Alternate Checkout UI</p>
         </div>
         <div className={styles.checkout}>
