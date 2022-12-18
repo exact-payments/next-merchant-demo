@@ -1,7 +1,26 @@
-//const exactJS = await import('https://api.exactpaysandbox.com/js/v1/exact.js')
 import styles from '../styles/Home.module.css'
 import OrderTotal from '../components/OrderTotal'
+import {Exact, ExactPaymentForm } from '../types'
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useCartState } from '../util/useCartState';
+
 export default function Checkout() {
+    let exact : Exact; //We will be setting this as a part of the tutorial
+
+    const items = useCartState().items
+      
+    const getTotalPrice = () => {
+        return  items.length * 100
+    }
+
+    //Prevent checkout with empty cart
+    const router = useRouter()
+    useEffect(() => {
+        if (!getTotalPrice()){
+            router.push('/')
+        }
+    })
     
     return (
         <main className={styles.main}>

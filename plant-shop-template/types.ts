@@ -54,3 +54,22 @@ export type Data = {
     token: string,
     orderId : string
   }
+
+export type PaymentInfo = {
+
+    id: string;
+    paymentId: string;
+    terminalId: string;
+    merchantId: string;
+    accountId: string;
+    type: string;
+    status: string;
+    approved: boolean;
+    captured: boolean;
+    voided: boolean;
+    refunded: boolean;
+    settled: boolean;
+    amount: number;
+    sentToBank: boolean;
+    createdAt: string;
+};

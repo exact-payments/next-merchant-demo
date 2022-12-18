@@ -4,7 +4,7 @@ import styles from '../styles/Home.module.css'
 
 import Script from 'next/script'
 import axios from 'axios'
-import { useState, FormEvent, useEffect } from "react"
+import { FormEvent, useEffect } from "react"
 import { MutatingDots } from "react-loader-spinner"
 import { useRouter } from "next/router"
 import OrderTotal from "../components/OrderTotal"
@@ -12,23 +12,19 @@ import OrderTotal from "../components/OrderTotal"
 import {Exact, ExactPaymentForm } from '../types'
 
 export default  function Checkout() {
-    const items = useCartState().items
     let exact : Exact;
 
-    
+    const items = useCartState().items
       
     const getTotalPrice = () => {
         return  items.length * 100
     }
 
-    
-
     const setOrderPosted = () => {
     (document.getElementById('hideable')! as HTMLInputElement).className = "";
     (document.getElementById('loading')! as HTMLInputElement).className = styles.hidden;
-}
+    }
     
-
     const  onExactJSReady = () => {
          //Price is in cents
         const url = process.env.NEXT_PUBLIC_BASE_URL + '/api/postOrders'
@@ -45,39 +41,31 @@ export default  function Checkout() {
                         border: "1px solid #ccc",
                         fontSize: "14px",
                       },
-                    // default: {
-                    //     fontFamily: "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,\
-                    //     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;",
-                    //     color: "#000000"
-                    // }
                 }});
             setTimeout(setOrderPosted, 600);
         })
     }
 
-    const handleSubmit = async (event : FormEvent<ExactPaymentForm>) => {
+    const handleSubmit = (event : FormEvent<ExactPaymentForm>) => {
         event.preventDefault()
     
         const form = event.currentTarget.closest("form");
         exact.payOrder()
             .then(payment_id => {
                 // add the payment id to your form
-
             (document.getElementById('payment_id')! as HTMLInputElement).value  = payment_id
-
             form.submit()
             })
     .catch(err => console.error(err));
     }
 
-    //Prevent checkout with empty
+    //Prevent checkout with empty cart
     const router = useRouter()
     useEffect(() => {
         if (!getTotalPrice()){
             router.push('/')
         }
     })
-
 
     return (
     <main className={styles.main}>
@@ -131,10 +119,7 @@ export default  function Checkout() {
         </form>
         </div>
     </main>
-    
     )
-        
-    
 }
 
   

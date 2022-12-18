@@ -17,8 +17,10 @@ export default async function handler(
       'content-type': 'application/json',
       authorization: process.env.ORGANIZATION_APP_TOKEN
     },
-    data: {...req.body,
-    reference: {referenceNo: "send to elavon"}}
+    data: {
+      ...req.body,
+      reference: {referenceNo: "sample for demo"}
+    }
   };
   await axios
     .request(options)
