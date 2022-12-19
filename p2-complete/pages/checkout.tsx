@@ -41,7 +41,7 @@ export default  function Checkout() {
                         fontSize: "14px",
                       },
                 }});
-            setTimeout(setOrderPosted, 600);
+            setTimeout(setOrderPosted, 1100);
         })
     }
 

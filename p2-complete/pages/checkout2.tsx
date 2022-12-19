@@ -63,7 +63,7 @@ export default  function Checkout() {
                   }
                 }
               });
-            setTimeout(setOrderPosted, 600);
+            setTimeout(setOrderPosted, 1100);
         })
     }
 
