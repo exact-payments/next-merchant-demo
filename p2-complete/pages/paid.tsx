@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import styles from 'styles/Home.module.css'
 import PaymentInfoBox from '../components/PaymentInfoBox'
 import { PaymentInfo } from '../types';
+import { MutatingDots } from 'react-loader-spinner';
 
 const fetchPaymentInfo = async () => {
     const response = await axios.get(process.env.NEXT_PUBLIC_BASE_URL + '/api/demoPaymentInformation');
@@ -23,7 +24,13 @@ export default function Paid () {
     }, [setPaymentInfo, setLoading]
     );
 
-    if (loading) return null;
+    if (loading) return (
+    <main className={styles.main}>
+    <MutatingDots height="100" width="100" color="#4fa94d" 
+    secondaryColor= '#4fa94d' radius='12.5' ariaLabel="mutating-dots-loading"/>
+    </main>
+    )
+    ;
     else return (<>
         <main className={styles.main}>
             <h1>
