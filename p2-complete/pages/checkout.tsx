@@ -17,7 +17,7 @@ export default  function Checkout() {
     const items = useCartState().items
       
     const getTotalPrice = () => {
-        return  items.length * 100
+        return  items.length * 1000
     }
 
     const setOrderPosted = () => {
@@ -80,7 +80,7 @@ export default  function Checkout() {
 
             <Script src="https://api.exactpaysandbox.com/js/v1/exact.js" strategy="afterInteractive" onReady={onExactJSReady}/>
         </div>
-        
+
         <div id="hideable" className={styles.hidden}>
         <form id="myForm" action="api/receivePaymentId" method="post" onSubmit={handleSubmit}>
             <div>
