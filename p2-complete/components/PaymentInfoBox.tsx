@@ -1,22 +1,12 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-
 import { PaymentInfo } from '../types';
-const fetchPaymentInfo = async () => {
-    const response = await axios.get(process.env.NEXT_PUBLIC_BASE_URL + '/api/demoPaymentInformation');
-    return response.data;
-};
 
- const PaymentInfoBox = () => {
-    const [paymentInfo, setPaymentInfo] = useState({} as PaymentInfo);
+interface PaymentInformation {
+    paymentInfo: PaymentInfo
+}
 
-
-    useEffect(() => {
-        fetchPaymentInfo().then(response => {
-            setPaymentInfo(response);
-        });
-    }, []
-    );
+ const PaymentInfoBox = (props: PaymentInformation) => {
+    
+    const { paymentInfo } = props;
 
     return (<>
         <h4>paymentInfo: </h4><br></br>
