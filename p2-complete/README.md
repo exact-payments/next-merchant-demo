@@ -136,7 +136,7 @@ We use the most recent value of `paymentInfo` sent to the server to make a GET r
 Uses `cartState()` to return a display of each item in the cart.
 
 #### `CheckoutButton.tsx`
-Uses `cartState()` to determine if the cart has items, if it does it displays a link to `/checkout/`.
+Uses `cartState()` to determine if the cart has items, if it does it displays a link to `/checkout/` or `/checkout2/` depending on Switch state
 
 #### `ClearCartButton.tsx`
 Uses `cartState()` to determine if the cart has items, if it does it provides the a button to clear it.
