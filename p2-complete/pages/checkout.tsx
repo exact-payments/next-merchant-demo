@@ -44,8 +44,6 @@ export default  function Checkout() {
 
 
         exact.on("payment-complete", (payload : ExactJSPayload) => {
-            console.log("PAYLOAD HERE")
-            console.log(payload);
             (document.getElementById('payment_id')! as HTMLInputElement).value  = payload.paymentId;
             (document.getElementById('myForm') as HTMLFormElement).submit();
             });

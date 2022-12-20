@@ -9,7 +9,7 @@ import { MutatingDots } from "react-loader-spinner"
 import { useRouter } from "next/router"
 import OrderTotal from "../components/OrderTotal"
 
-import {Exact, ExactPaymentForm } from '../types'
+import {Exact, ExactJSPayload, ExactPaymentForm } from '../types'
 
 export default  function Checkout() {
     let exact : Exact;
@@ -63,21 +63,26 @@ export default  function Checkout() {
                   }
                 }
               });
+
+        exact.on("payment-complete", (payload : ExactJSPayload) => {
+            (document.getElementById('payment_id')! as HTMLInputElement).value  = payload.paymentId;
+            (document.getElementById('myForm') as HTMLFormElement).submit();
+            });
+            
+            exact.on("payment-failed", (payload) => {
+                console.debug(payload);
+            });
             setTimeout(setOrderPosted, 1100);
         })
     }
 
+    
     const handleSubmit = (event : FormEvent<ExactPaymentForm>) => {
         event.preventDefault()
     
-        const form = event.currentTarget.closest("form");
+    //    const form = event.currentTarget.closest("form");
         exact.payOrder()
-            .then(payment_id => {
-                // add the payment id to your form
-            (document.getElementById('payment_id')! as HTMLInputElement).value  = payment_id
-            form.submit()
-            })
-    .catch(err => console.error(err));
+    
     }
 
     //Prevent checkout with empty cart
@@ -94,6 +99,7 @@ export default  function Checkout() {
         <h1>Demonstration only.</h1>
         <h2><a href="https://developer.exactpay.com/docs/test-cards/" target="_blank">TEST CARDS</a></h2>
     </div>
+    
     <main className={styles.main}>
         <OrderTotal/>
         <div id="loading">
@@ -149,7 +155,6 @@ export default  function Checkout() {
         </div>
     </main>
     </>
-
     )
 }
 
