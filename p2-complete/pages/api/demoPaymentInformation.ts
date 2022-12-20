@@ -18,7 +18,8 @@ export default async function handler(
     };
   
      await axios.request(options).then(function (response) {
-       console.log(response.data);
+      // console.log(response.data);
+      console.log(req.body)
        res.json(response.data);
        res.status(200)
 

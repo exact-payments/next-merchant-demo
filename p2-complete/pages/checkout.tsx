@@ -9,7 +9,7 @@ import { MutatingDots } from "react-loader-spinner"
 import { useRouter } from "next/router"
 import OrderTotal from "../components/OrderTotal"
 
-import {Exact, ExactPaymentForm } from '../types'
+import {Exact, ExactJSPayload, ExactPaymentForm } from '../types'
 
 export default  function Checkout() {
     let exact : Exact;
@@ -43,15 +43,15 @@ export default  function Checkout() {
                 }});
 
 
-        exact.on("payment-complete", (payload) => {
+        exact.on("payment-complete", (payload : ExactJSPayload) => {
+            console.log("PAYLOAD HERE")
             console.log(payload);
-       //     (document.getElementById('payment_id')! as HTMLInputElement).value  = payment_id
-
+            (document.getElementById('payment_id')! as HTMLInputElement).value  = payload.paymentId;
             (document.getElementById('myForm') as HTMLFormElement).submit();
             });
             
             exact.on("payment-failed", (payload) => {
-            console.debug(payload);
+                console.debug(payload);
             });
             setTimeout(setOrderPosted, 1100);
         })

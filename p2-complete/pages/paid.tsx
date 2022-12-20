@@ -42,9 +42,9 @@ export default function Paid () {
             <p>
             Displaying payment details for demonstration
             </p>
-            <p>
+            <div>
             <PaymentInfoBox paymentInfo={paymentInfo} />
-            </p>
+            </div>
             <h1>
             <Link href='/'>Return to our homepage</Link>
             </h1>
