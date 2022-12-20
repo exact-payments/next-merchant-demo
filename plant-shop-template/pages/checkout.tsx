@@ -12,7 +12,7 @@ export default function Checkout() {
     const items = useCartState().items
       
     const getTotalPrice = () => {
-        return  items.length * 100
+        return  items.length * 1000
     }
 
     //Prevent checkout with empty cart
