@@ -79,8 +79,6 @@ export default  function Checkout() {
     
     const handleSubmit = (event : FormEvent<ExactPaymentForm>) => {
         event.preventDefault()
-    
-    //    const form = event.currentTarget.closest("form");
         exact.payOrder()
     
     }
