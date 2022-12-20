@@ -4,13 +4,16 @@ declare global {
 export type Exact = {
     components : (order : {orderId : string}) => Component,
     payOrder : () => Promise<string>,
-    on : (event : string, fc: (action :string) => void) => void,
+    on : (paymentState : "payment-complete" | "payment-failed", functionCall: (payload :ExactJSPayload) => void) => void,
 }
 export type Component =  {
     addCard : (divName : string, payload? : {"style"? : Styling, "wallets"? :boolean, label?: Label }) => void;
     addComponent : (divName : string, divId: string, payload? : {"style"? : Styling, "wallets"? :boolean, label?: Label }) => void;
 }
 
+export type ExactJSPayload = {
+    paymentId : string
+}
 
 export type Label = {
     //Labels

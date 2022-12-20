@@ -21,8 +21,8 @@ export default  function Checkout() {
     }
 
     const setOrderPosted = () => {
-    (document.getElementById('hideable')! as HTMLInputElement).className = "";
-    (document.getElementById('loading')! as HTMLInputElement).className = styles.hidden;
+        (document.getElementById('hideable')! as HTMLInputElement).className = "";
+        (document.getElementById('loading')! as HTMLInputElement).className = styles.hidden;
     }
     
     const  onExactJSReady = () => {
@@ -43,9 +43,9 @@ export default  function Checkout() {
                 }});
 
 
-        exact.on("payment-complete", (payload : ExactJSPayload) => {
-            (document.getElementById('payment_id')! as HTMLInputElement).value  = payload.paymentId;
-            (document.getElementById('myForm') as HTMLFormElement).submit();
+            exact.on("payment-complete", (payload : ExactJSPayload) => {
+                (document.getElementById('payment_id')! as HTMLInputElement).value  = payload.paymentId;
+                (document.getElementById('myForm') as HTMLFormElement).submit();
             });
             
             exact.on("payment-failed", (payload) => {
