@@ -41,21 +41,29 @@ export default  function Checkout() {
                         fontSize: "14px",
                       },
                 }});
+
+
+        exact.on("payment-complete", (payload) => {
+            console.log(payload);
+       //     (document.getElementById('payment_id')! as HTMLInputElement).value  = payment_id
+
+            (document.getElementById('myForm') as HTMLFormElement).submit();
+            });
+            
+            exact.on("payment-failed", (payload) => {
+            console.debug(payload);
+            });
             setTimeout(setOrderPosted, 1100);
         })
     }
 
+    
     const handleSubmit = (event : FormEvent<ExactPaymentForm>) => {
         event.preventDefault()
     
-        const form = event.currentTarget.closest("form");
+    //    const form = event.currentTarget.closest("form");
         exact.payOrder()
-            .then(payment_id => {
-                // add the payment id to your form
-            (document.getElementById('payment_id')! as HTMLInputElement).value  = payment_id
-            form.submit()
-            })
-    .catch(err => console.error(err));
+    
     }
 
     //Prevent checkout with empty cart
