@@ -15,7 +15,7 @@ export default async function handler(
     headers: {
       accept: 'application/json',
       'content-type': 'application/json',
-      authorization: process.env.ORGANIZATION_APP_TOKEN
+      authorization: process.env.APPLICATION_TOKEN
     },
     data: {
       ...req.body,

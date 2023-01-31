@@ -13,7 +13,7 @@ export default async function handler(
       url: `https://api.exactpaysandbox.com/account/${process.env.P2_ACCOUNT_ID}/payments/${process.env.paymentId}`,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: process.env.ORGANIZATION_APP_TOKEN
+        Authorization: process.env.APPLICATION_TOKEN
       }
     };
   

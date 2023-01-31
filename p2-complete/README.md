@@ -9,7 +9,7 @@ https://p2-demo.merchant-portal.one/
 ### Environment
 This program requires a `.env.local` with the following: 
 - P2_ACCOUNT_ID: Your Account ID
-- ORGANIZATION_APP_TOKEN: An application token generated for the Exact Payments API
+- APPLICATION_TOKEN: An application token generated for the Exact Payments API
 - NEXT_PUBLIC_BASE_URL: set to `http://localhost:3000` for local development- something else if you are deploying somewhere.
 
 Run the following to start a development instance of the app.
