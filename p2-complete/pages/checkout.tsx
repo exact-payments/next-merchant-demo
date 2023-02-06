@@ -37,6 +37,7 @@ export default  function Checkout() {
                 label: {position: "above"},
                 style: {
                     default: {
+                        padding: '2px',
                         border: "1px solid #ccc",
                         fontSize: "14px",
                       },
