@@ -13,11 +13,11 @@ export type Component =  {
 }
 
 export type ExactJSPayload = {
-    paymentId? : string
-    token? : string
-    token_type? : string
-    token_last4? : string
-    token_brand? : string
+    paymentId : string
+    token : string
+    token_type : string
+    token_last4 : string
+    token_brand : string
     
 }
 
