@@ -5,6 +5,7 @@ export type Exact = {
     components : (order : {orderId : string}) => Component,
     payOrder : () => Promise<string>,
     on : (paymentState : "payment-complete" | "payment-failed", functionCall: (payload :ExactJSPayload) => void) => void,
+    tokenize : () => void
 }
 export type Component =  {
     addCard : (divName : string, payload? : {"style"? : Styling, "wallets"? :boolean, label?: Label }) => void;
@@ -12,7 +13,12 @@ export type Component =  {
 }
 
 export type ExactJSPayload = {
-    paymentId : string
+    paymentId? : string
+    token? : string
+    token_type? : string
+    token_last4? : string
+    token_brand? : string
+    
 }
 
 export type Label = {
