@@ -31,7 +31,7 @@ export default  function Checkout() {
         amount: getTotalPrice(), //Price is in cents
     }).then(
          (response) => {
-            exact = ExactJS(response.data.token, {locale: "es-MX"})
+            exact = ExactJS(response.data.token)
             const components = exact.components({orderId: response.data.orderId});
             components.addCard('cardElement', {
                 label: {position: "above"},
