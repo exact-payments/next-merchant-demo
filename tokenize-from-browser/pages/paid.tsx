@@ -7,7 +7,7 @@ import { PaymentInfo } from '../types';
 import { MutatingDots } from 'react-loader-spinner';
 
 const fetchPaymentInfo = async () => {
-    const response = await axios.get(process.env.NEXT_PUBLIC_BASE_URL + '/api/demoPaymentInformation');
+    const response = await axios.get(process.env.NEXT_PUBLIC_BASE_URL + '/api/demoPayWithToken');
     return response.data;
 };
 

@@ -1,5 +1,5 @@
 declare global {
-    let ExactJS: (key : string) => Exact;
+    let ExactJS: (key : string, locale? : {locale : string}) => Exact;
   }
 export type Exact = {
     components : (order : {orderId : string}) => Component,

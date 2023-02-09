@@ -46,9 +46,10 @@ export default  function Checkout() {
 
             exact.on("payment-complete", (payload : ExactJSPayload) => {
                 (document.getElementById('token')! as HTMLInputElement).value  = payload.token;
-                (document.getElementById('payment_id')! as HTMLInputElement).value  = payload.paymentId;
-                (document.getElementById('payment_id')! as HTMLInputElement).value  = payload.paymentId;
-                (document.getElementById('payment_id')! as HTMLInputElement).value  = payload.paymentId;
+                (document.getElementById('token_type')! as HTMLInputElement).value  = payload.token_type;
+                (document.getElementById('token_last4')! as HTMLInputElement).value  = payload.token_last4;
+                (document.getElementById('token_brand')! as HTMLInputElement).value  = payload.token_brand;
+                (document.getElementById('order_id')! as HTMLInputElement).value = response.data.orderId;
                 (document.getElementById('myForm') as HTMLFormElement).submit();
             });
             
@@ -90,7 +91,7 @@ export default  function Checkout() {
         </div>
 
         <div id="hideable" className={styles.hidden}>
-        <form id="myForm" action="api/receivePaymentId" method="post" onSubmit={handleSubmit}>
+        <form id="myForm" action="api/receiveTokenAndPay" method="post" onSubmit={handleSubmit}>
             <div>
                 <label htmlFor="email">Email Address</label>
                 <input type="email" id="email" name="email" autoComplete="email" />
@@ -129,6 +130,7 @@ export default  function Checkout() {
             <input type="hidden" name="token_type" id="token_type"></input>
             <input type="hidden" name="token_last4" id="token_last4"></input>
             <input type="hidden" name="token_brand" id="token_brand"></input>
+            <input type="hidden" name="order_id" id="order_id"></input>
 
             <div>
                 <input type="submit" name="commit" value="Pay Now" data-disable-with="Pay Now" />

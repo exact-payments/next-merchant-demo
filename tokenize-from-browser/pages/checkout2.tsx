@@ -31,41 +31,24 @@ export default  function Checkout() {
         amount: getTotalPrice(), //Price is in cents
     }).then(
          (response) => {
-            exact = ExactJS(response.data.token)
+            exact = ExactJS(response.data.token, {locale: "es-MX"})
             const components = exact.components({orderId: response.data.orderId});
-            components.addComponent('cardDiv', 'card-number', {
-                label: {position: "inside"},
+            components.addCard('cardElement', {
+                label: {position: "above"},
                 style: {
-                  default: {
-                    borderRadius: "10px 10px 0px 0px",
-                    borderWidth: "2px 2px 0px 2px",
-                    borderColor: "red"
-                  }
-                }
-              });
-              components.addComponent('expiryDiv', 'expiry-date', {
-                label: {position: "inside"},
-                style: {
-                  default: {
-                    borderRadius: "0px 0px 0px 10px",
-                    borderWidth: "0px 0px 2px 2px",
-                    borderColor: "darkseagreen"
-                  }
-                }
-              });
-              components.addComponent('cvdDiv', 'cvd', {
-                label: {position: "inside"},
-                style: {
-                  default: {
-                    borderRadius: "0px 0px 10px 0px",
-                    borderWidth: "0px 2px 2px 0px",
-                    borderColor: "blue"
-                  }
-                }
-              });
+                    default: {
+                        padding: '2px',
+                        border: "1px solid #ccc",
+                        fontSize: "14px",
+                      },
+                }});
 
         exact.on("payment-complete", (payload : ExactJSPayload) => {
-                (document.getElementById('payment_id')! as HTMLInputElement).value  = payload.paymentId;
+                (document.getElementById('token')! as HTMLInputElement).value  = payload.token;
+                (document.getElementById('token_type')! as HTMLInputElement).value  = payload.token_type;
+                (document.getElementById('token_last4')! as HTMLInputElement).value  = payload.token_last4;
+                (document.getElementById('token_brand')! as HTMLInputElement).value  = payload.token_brand;
+                (document.getElementById('order_id')! as HTMLInputElement).value = response.data.orderId;
                 (document.getElementById('myForm') as HTMLFormElement).submit();
             });
             
@@ -79,8 +62,8 @@ export default  function Checkout() {
     
     const handleSubmit = (event : FormEvent<ExactPaymentForm>) => {
         event.preventDefault()
-        exact.payOrder()
-    
+        exact.tokenize()
+        return false
     }
 
     //Prevent checkout with empty cart
@@ -107,16 +90,14 @@ export default  function Checkout() {
         </div>
 
         <div id="hideable" className={styles.hidden}>
-        <form id="myForm" action="api/receivePaymentId" method="post" onSubmit={handleSubmit}>
+        <form id="myForm" action="api/receiveTokenAndPay" method="post" onSubmit={handleSubmit}>
             <div>
                 <label htmlFor="email">Email Address</label>
                 <input type="email" id="email" name="email" autoComplete="email" />
             </div>
 
-            <div className={styles.carddivwrapper}>
-            <div id="cardDiv" className={styles.carddiv}></div>
-            <div id="expiryDiv"className={styles.expirydiv}></div>
-            <div id="cvdDiv" className={styles.cvddiv}></div>
+            <div id="cardElement" >
+
             </div>
 
             <div>
@@ -144,7 +125,11 @@ export default  function Checkout() {
                 <input type="text" id="postcode" name="postcode" autoComplete="postal-code" />
             </div>
 
-            <input type="hidden" name="payment_id" id="payment_id"></input>
+            <input type="hidden" name="token" id="token"></input>
+            <input type="hidden" name="token_type" id="token_type"></input>
+            <input type="hidden" name="token_last4" id="token_last4"></input>
+            <input type="hidden" name="token_brand" id="token_brand"></input>
+            <input type="hidden" name="order_id" id="order_id"></input>
 
             <div>
                 <input type="submit" name="commit" value="Pay Now" data-disable-with="Pay Now" />
