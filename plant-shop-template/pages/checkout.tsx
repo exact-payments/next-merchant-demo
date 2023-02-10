@@ -1,7 +1,7 @@
 //unused imports will be used in tutorial. they are included for convenience.
 import styles from '../styles/Home.module.css'
 import OrderTotal from '../components/OrderTotal'
-import {Exact, ExactPaymentForm, ExactJSPayload } from '../types'
+import {Exact, ExactPaymentForm, ExactJSPaymentPayload } from '../types'
 import { useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/router';
 import { useCartState } from '../util/useCartState';
