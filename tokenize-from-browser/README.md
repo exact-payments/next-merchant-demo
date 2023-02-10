@@ -72,9 +72,9 @@ Called by our form when submitted.
 
 We first intercept the event by calling `preventDefault()`.
 
-We then call `exact.payOrder()` which returns a Promise with a `payment_id`.
+We then call `exact.tokenize()` which returns a Promise with a token information.
 
-`payment_id` is appended to the form and then submitted.
+Token information is appended to the form and then submitted.
 
 ##### return
 We are loading ExactJS here via a `<Script>` tag, and calling `onExactJSReady()` on script load.
@@ -92,7 +92,7 @@ We send the user back to the index page if they are in an illegal state for chec
 A copy of the checkout page, but with a bullet ui created by setting individual elements.
 
 #### `paid.tsx`
-A straightforward post-payment screen.
+A demo post-payment screen .
 
 **OPTIONAL:**
 
@@ -111,14 +111,13 @@ Sends a call to the Exact Pay Sandbox Orders API to create a new order for the g
 
 Receives the response from the Exact API and if there is no error, returns the access token and orderId
 
-#### `receivePaymentId.ts`
-Called after a succesful payment is submitted to the Exact Pay Sandbox Payments API. 
+#### `receiveTokenAndPay.ts`
+Called after a token is succesfully created.
 
-This is a placeholder function, you may want to save the payment to your server, or do some other post-payment backend action.
+We POST this token the Exact Payments Sandbox API.
 
-For the purpose of this demo, we save `paymentInfo` to an environment variable, so we can display it with `api/demoPaymentInformation`
+We use the [Pay For Order with Token endpoint](https://developer.exactpay.com/api/#/operations/post-account-accountId-orders-orderId-pay)
 
-We print payment object to indicate that the payment has succesfully been processed.
 
 We redirect the user to the `/paid` page
 
@@ -145,7 +144,7 @@ Uses `cartState()` to determine if the cart has items, if it does it provides th
 Uses `cartState()` to determine the current value of cart items and displays that in format $XX.xx.
 
 #### `PaymentInfoBox.tsx`
-Makes a call to `api/demoPaymentInformation` to display payment information for the purpose of this demo.
+Makes a call to `api/demoPayWithToken` to display payment information for the purpose of this demo.
 
 #### `StoreItem.tsx`
 An item in the store is represented as an image. If the item is clicked it is added to the cart.
