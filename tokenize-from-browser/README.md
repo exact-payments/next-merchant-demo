@@ -92,7 +92,7 @@ We send the user back to the index page if they are in an illegal state for chec
 A copy of the checkout page, but with a bullet ui created by setting individual elements.
 
 #### `paid.tsx`
-A demo post-payment screen .
+A demo post-payment screen.
 
 **OPTIONAL:**
 
