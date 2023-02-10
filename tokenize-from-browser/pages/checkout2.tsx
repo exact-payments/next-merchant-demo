@@ -9,7 +9,7 @@ import { MutatingDots } from "react-loader-spinner"
 import { useRouter } from "next/router"
 import OrderTotal from "../components/OrderTotal"
 
-import {Exact, ExactJSPayload, ExactPaymentForm } from '../types'
+import {Exact, ExactJSTokenPayload, ExactPaymentForm } from '../types'
 
 export default  function Checkout() {
     let exact : Exact;
@@ -31,7 +31,7 @@ export default  function Checkout() {
         amount: getTotalPrice(), //Price is in cents
     }).then(
          (response) => {
-            exact = ExactJS(response.data.token, {locale: "es-MX"})
+            exact = ExactJS(response.data.token)
             const components = exact.components({orderId: response.data.orderId});
             components.addCard('cardElement', {
                 label: {position: "above"},
@@ -43,11 +43,14 @@ export default  function Checkout() {
                       },
                 }});
 
-        exact.on("payment-complete", (payload : ExactJSPayload) => {
-                (document.getElementById('token')! as HTMLInputElement).value  = payload.token;
-                (document.getElementById('token_type')! as HTMLInputElement).value  = payload.token_type;
-                (document.getElementById('token_last4')! as HTMLInputElement).value  = payload.token_last4;
-                (document.getElementById('token_brand')! as HTMLInputElement).value  = payload.token_brand;
+
+            exact.on("payment-complete", (payload : unknown) => {
+                const tokenPayload = payload as ExactJSTokenPayload
+                (document.getElementById('token')! as HTMLInputElement).value  = tokenPayload.token;
+                (document.getElementById('card_brand')! as HTMLInputElement).value  = tokenPayload.card_brand;
+                (document.getElementById('expiry_month')! as HTMLInputElement).value  = tokenPayload.expiry_month;
+                (document.getElementById('expiry_year')! as HTMLInputElement).value  = tokenPayload.expiry_year;
+                (document.getElementById('last4')! as HTMLInputElement).value  = tokenPayload.last4;
                 (document.getElementById('order_id')! as HTMLInputElement).value = response.data.orderId;
                 (document.getElementById('myForm') as HTMLFormElement).submit();
             });
@@ -90,7 +93,7 @@ export default  function Checkout() {
         </div>
 
         <div id="hideable" className={styles.hidden}>
-        <form id="myForm" action="api/receiveTokenAndPay" method="post" onSubmit={handleSubmit}>
+        <form id="myForm" action="api/receiveTokenAndPrint" method="post" onSubmit={handleSubmit}>
             <div>
                 <label htmlFor="email">Email Address</label>
                 <input type="email" id="email" name="email" autoComplete="email" />
@@ -126,9 +129,10 @@ export default  function Checkout() {
             </div>
 
             <input type="hidden" name="token" id="token"></input>
-            <input type="hidden" name="token_type" id="token_type"></input>
-            <input type="hidden" name="token_last4" id="token_last4"></input>
-            <input type="hidden" name="token_brand" id="token_brand"></input>
+            <input type="hidden" name="card_brand" id="card_brand"></input>
+            <input type="hidden" name="expiry_month" id="expiry_month"></input>
+            <input type="hidden" name="expiry_year" id="expiry_year"></input>
+            <input type="hidden" name="last4" id="last4"></input>
             <input type="hidden" name="order_id" id="order_id"></input>
 
             <div>

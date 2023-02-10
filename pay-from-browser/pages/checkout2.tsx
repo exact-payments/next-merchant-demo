@@ -9,7 +9,7 @@ import { MutatingDots } from "react-loader-spinner"
 import { useRouter } from "next/router"
 import OrderTotal from "../components/OrderTotal"
 
-import {Exact, ExactJSPayload, ExactPaymentForm } from '../types'
+import {Exact, ExactJSPaymentPayload, ExactPaymentForm } from '../types'
 
 export default  function Checkout() {
     let exact : Exact;
@@ -64,8 +64,9 @@ export default  function Checkout() {
                 }
               });
 
-        exact.on("payment-complete", (payload : ExactJSPayload) => {
-                (document.getElementById('payment_id')! as HTMLInputElement).value  = payload.paymentId;
+        exact.on("payment-complete", (payload : unknown) => {
+                const paymentPayload = payload as ExactJSPaymentPayload
+                (document.getElementById('payment_id')! as HTMLInputElement).value  = paymentPayload.paymentId;
                 (document.getElementById('myForm') as HTMLFormElement).submit();
             });
             

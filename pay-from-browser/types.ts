@@ -4,7 +4,7 @@ declare global {
 export type Exact = {
     components : (order : {orderId : string}) => Component,
     payOrder : () => Promise<string>,
-    on : (paymentState : "payment-complete" | "payment-failed", functionCall: (payload :ExactJSPayload) => void) => void,
+    on : (paymentState : "payment-complete" | "payment-failed", functionCall: (payload :ExactJSPaymentPayload | ExactJSTokenPayload) => void) => void,
     tokenize : () => void
 }
 export type Component =  {
@@ -12,14 +12,18 @@ export type Component =  {
     addComponent : (divName : string, divId: string, payload? : {"style"? : Styling, "wallets"? :boolean, label?: Label }) => void;
 }
 
-export type ExactJSPayload = {
-    paymentId : string
-    token : string
-    token_type : string
-    token_last4 : string
-    token_brand : string
-    
+export type ExactJSPaymentPayload = {
+    paymentId : string 
 }
+export type ExactJSTokenPayload = {
+    token : string
+    card_brand : string
+    last4 : string
+    expiry_month: string
+    expiry_year: string
+}
+
+
 
 export type Label = {
     //Labels
@@ -66,19 +70,25 @@ export type Data = {
 
 export type PaymentInfo = {
 
-    id: string;
-    paymentId: string;
-    terminalId: string;
-    merchantId: string;
-    accountId: string;
-    type: string;
-    status: string;
-    approved: boolean;
-    captured: boolean;
-    voided: boolean;
-    refunded: boolean;
-    settled: boolean;
-    amount: number;
-    sentToBank: boolean;
-    createdAt: string;
-};
+    id: string,
+    paymentId: string,
+    terminalId: string,
+    merchantId: string,
+    accountId: string,
+    type: string,
+    status: string,
+    approved: boolean,
+    captured: boolean,
+    voided: boolean,
+    refunded: boolean,
+    settled: boolean,
+    amount: number,
+    sentToBank: boolean,
+    createdAt: string
+}
+
+export type TokenInfo = {
+    token : string,
+    orderId : string,
+    accountId : string
+}

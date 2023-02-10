@@ -1,9 +1,12 @@
+//Example where we pay using token on the backend
+
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios';
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
-) {
+)
+{
 
   if (!req.body.token || !req.body.order_id){
     res.status(400).end()
