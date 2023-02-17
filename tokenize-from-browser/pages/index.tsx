@@ -14,14 +14,14 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Exact Plant Shop</title>
+        <title>Exact Flower Shop</title>
         <meta name="description" content="Demo of ExactJS functionality" />
-        <link rel="icon" href="/favicon.jpg" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
       <div className={styles.grid}>
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://developer.exactpay.com">Exact Payments</a> Plant Shop
+          Welcome to <a href="https://developer.exactpay.com">Exact Payments</a> Flower Shop
         </h1>
 
         <p className={styles.description}>

@@ -40,7 +40,8 @@ export default function Paid () {
             Your payment was tokenized.
             </h3>
             <h3>
-                <a href="https://developer.exactpay.com/api/#/operations/post-account-accountId-orders-orderId-pay">
+                <a href="https://developer.exactpay.com/api/#/operations/post-account-accountId-orders-orderId-pay"
+                target="_blank">
                 Pay for Order with Token
                 </a>
             </h3>

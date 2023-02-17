@@ -40,6 +40,7 @@ export default  function Checkout() {
                         padding: '2px',
                         border: "1px solid #ccc",
                         fontSize: "14px",
+                        backgroundColor: "#b6bdcb"
                       },
                 }});
 
@@ -80,14 +81,14 @@ export default  function Checkout() {
     return (
     <>
     <div className={styles.checkoutdisclaimer}>
-        <h1>Demonstration only.</h1>
+        <h1>2-Pass Tokenized Payment</h1>
         <h2><a href="https://developer.exactpay.com/docs/test-cards/" target="_blank">TEST CARDS</a></h2>
     </div>
     
     <main className={styles.main}>
         <OrderTotal/>
         <div id="loading">
-            <MutatingDots height="100" width="100" color="#4fa94d" secondaryColor= '#4fa94d' radius='12.5' ariaLabel="mutating-dots-loading"/>
+            <MutatingDots height="100" width="100" color="#d8908f" secondaryColor= '#d8908f' radius='12.5' ariaLabel="mutating-dots-loading"/>
 
             <Script src="https://api.exactpaysandbox.com/js/v1/exact.js" strategy="afterInteractive" onReady={onExactJSReady}/>
         </div>

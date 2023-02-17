@@ -28,7 +28,7 @@
 }
 
 .title a {
-  color: #7ac833;
+  color: #fb93c6;
   text-decoration: none;
 }
 
@@ -68,7 +68,7 @@
   position: relative;
   right: 0%;
   min-height: 20rem;
-  border: 5px solid rgba(29, 115, 70, 0.623);
+  border: 5px solid #d8908f;
   padding: 1rem;
 }
 
@@ -108,8 +108,8 @@
 .card:hover,
 .card:focus,
 .card:active {
-  color: #7ac833;
-  border-color: #7ac833;
+  color: #fb93c6;
+  border-color: #fb93c6;
 }
 
 .card h2 {
@@ -165,7 +165,7 @@
   margin-top: .25rem;
 }
 .switchlabelgreen{
-  color: #7ac833;
+  color: #fb93c6;
 }
 
 .checkoutdisclaimer {
