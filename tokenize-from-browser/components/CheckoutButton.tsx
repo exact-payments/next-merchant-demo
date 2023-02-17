@@ -13,7 +13,7 @@ const CheckoutButton  = () => {
       isEmpty ? <></> : <>
       <div className={styles.switch}>
           <Switch checked={altCheckoutSelected} onChange={setAltCheckoutSelected} onColor='#d8908f' offColor= '#000000' activeBoxShadow='7ac833' uncheckedIcon={false} checkedIcon={false}/>
-          <p className={altCheckoutSelected ? styles.switchlabelgreen :'' }>{altCheckoutSelected ? "2-Pass Tokenization" : "1-Pass Tokenization"}</p>
+          <p className={altCheckoutSelected ? styles.switchlabelgreen :'' }>{altCheckoutSelected ? "2" : "1"}-Pass Payment</p>
       </div>
       <Link href= {altCheckoutSelected ? 'checkout2' : 'checkout'} className={styles.card}>Checkout</Link>
       </>
