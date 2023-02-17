@@ -9,6 +9,10 @@ export default async function handler(
     res.json({
       "orderId" : process.env.orderId,
       "token" : process.env.token,
+      "cardBrand" : process.env.cardBrand,
+      "expiryMonth" : process.env.expiryMonth,
+      "expiryYear" : process.env.expiryYear,
+      "last4" : process.env.last4,
       "accountId" : process.env.P2_ACCOUNT_ID
     })
     res.status(200)

@@ -90,5 +90,9 @@ export type PaymentInfo = {
 export type TokenInfo = {
     token : string,
     orderId : string,
-    accountId : string
+    accountId : string,
+    cardBrand : string,
+    expiryMonth : string,
+    expiryYear : string,
+    last4 : string
 }

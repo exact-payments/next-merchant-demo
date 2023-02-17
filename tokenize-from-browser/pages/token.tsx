@@ -49,10 +49,22 @@ export default function Paid () {
             Displaying info for demonstration.
             </p>
             <div>
+            orderId: {tokenInfo.orderId}
+            </div>
+            <div>
             token: {tokenInfo.token}
             </div>
             <div>
-            orderId: {tokenInfo.orderId}
+            cardBrand: {tokenInfo.cardBrand}
+            </div>
+            <div>
+            expiryMonth: {tokenInfo.expiryMonth}
+            </div>
+            <div>
+            expiryYear: {tokenInfo.expiryYear}
+            </div>
+            <div>
+            last4: {tokenInfo.last4}
             </div>
             <div>
             accountId: {tokenInfo.accountId}
