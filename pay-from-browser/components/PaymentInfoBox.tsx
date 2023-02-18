@@ -9,7 +9,12 @@ interface PaymentInformation {
     const { paymentInfo } = props;
 
     return (<>
+        
         <h4>paymentInfo: </h4><br></br>
+        <code>
+            POST /account/{paymentInfo.accountId}/payments/{paymentInfo.paymentId}
+        </code><br></br>
+        <br></br>
         <code>id: {paymentInfo.id}</code><br></br>
         <code>paymentId: {paymentInfo.paymentId}</code><br></br>
         <code>terminalId: {paymentInfo.terminalId}</code><br></br>

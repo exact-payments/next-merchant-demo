@@ -11,7 +11,12 @@ export default async function handler(
   if (!req.body.token || !req.body.order_id){
     res.status(400).end()
   }
-  console.log(req.body.order_id)
+  console.log("\n\n PAYMENT FORM DATA: \n")
+  console.log(req.body)
+
+  console.log("\n\n PAYING FOR ORDER WITH TOKEN: \n")
+  console.log(req.body.token)
+  console.log("\n\n")
 
     //Here we save orderId to simulate a database
     process.env.orderId = req.body.order_id
@@ -30,6 +35,7 @@ export default async function handler(
     axios
     .request(options)
     .then(function (response) {
+      console.log("\n\nRESPONSE FROM API:\n");
       console.log(response.data);
     })
     .catch(function (error) {

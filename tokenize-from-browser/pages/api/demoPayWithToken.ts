@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   const options = {
       method: 'GET',
-      url: `https://api.exactpaysandbox.com/orders/${process.env.orderId}`,
+      url: `https://api.exactpaysandbox.com/account/${process.env.accountId}/orders/${process.env.orderId}`,
       headers: {
         'Content-Type': 'application/json',
         Authorization: process.env.APPLICATION_TOKEN
@@ -16,7 +16,7 @@ export default async function handler(
   
      await axios.request(options).then(function (response) {
       // console.log(response.data);
-      console.log(req.body)
+       console.log(req.body)
        res.json(response.data);
        res.status(200)
 

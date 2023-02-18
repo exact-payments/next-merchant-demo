@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   //HERE YOU SHOULD SAVE THE PAYMENT TO YOUR SERVER!
   //We simulate this by saving the payment id to our environment
-  console.log("here")
+  // console.log(req.body)
   const options = {
       method: 'GET',
       url: `https://api.exactpaysandbox.com/account/${process.env.P2_ACCOUNT_ID}/payments/${process.env.paymentId}`,

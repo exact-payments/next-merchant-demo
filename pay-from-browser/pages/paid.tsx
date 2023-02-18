@@ -40,9 +40,14 @@ export default function Paid () {
             The details of your payment have been sent to the server!
             </h3>
             <p>
-            Displaying payment details for demonstration
+            Displaying payment details from 
+            <a href="https://developer.exactpay.com/api#/paths/account-accountId--payments--paymentId/get">
+            &nbsp;API&nbsp;
+            </a>
+             for demonstration
             </p>
             <div>
+            
             <PaymentInfoBox paymentInfo={paymentInfo} />
             </div>
             <h1>
