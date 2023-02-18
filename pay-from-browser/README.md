@@ -1,6 +1,6 @@
-# ExactJS Merchant Demo (Embedded Payments)
+# ExactJS Plant Shop
 This is a template app for Exact's Plant Shop allowing users to add plants to a cart and proceed to a checkout page. 
-The checkout page displays a form which uses ExactJS, the payments are then routed sent to the Exact Payments API
+The checkout page displays a form which uses ExactJS, the payments are made directly in the browser.
 
 You can view a demo of this application running at: 
 https://p2-demo.merchant-portal.one/
