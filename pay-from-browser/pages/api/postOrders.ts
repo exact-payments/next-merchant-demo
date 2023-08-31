@@ -25,8 +25,6 @@ export default async function handler(
     .request(options)
     .then((response) => {
       res.status(200)
-      console.log("\n\nPOST ORDER RESPONSE:\n")
-      console.log(response.data)
       res.json({
         token: response.data.accessToken.token,
         orderId: response.data.id
@@ -38,5 +36,4 @@ export default async function handler(
       res.status(401)
       res.end()
     });
-
 }

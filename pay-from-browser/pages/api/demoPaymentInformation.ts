@@ -7,7 +7,6 @@ export default async function handler(
 ) {
   //HERE YOU SHOULD SAVE THE PAYMENT TO YOUR SERVER!
   //We simulate this by saving the payment id to our environment
-  // console.log(req.body)
   const options = {
     method: 'GET',
     url: `https://${process.env.NEXT_PUBLIC_P2_DOMAIN}/account/${process.env.P2_ACCOUNT_ID}/payments/${process.env.paymentId}`,
@@ -18,16 +17,11 @@ export default async function handler(
   };
 
   await axios.request(options).then(function (response) {
-    // console.log(response.data);
-    console.log(req.body)
     res.json(response.data);
     res.status(200)
-
   }).catch(function (error) {
     console.error(error);
     res.status(501)
     res.end()
   });
-
-  // }
 }
