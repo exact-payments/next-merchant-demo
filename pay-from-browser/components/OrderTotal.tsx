@@ -1,7 +1,7 @@
 import { StoreItemProps, useCartState } from "../util/useCartState"
 
 export const totalPrice = (items: StoreItemProps[]) => {
-  return items.map(x => x.price).reduce((acc, cur) => acc + cur, 0)
+  return items.map(item => item.price).reduce((total, price) => total + price, 0)
 }
 
 export const OrderTotal = () => {

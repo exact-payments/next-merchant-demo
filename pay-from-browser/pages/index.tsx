@@ -18,6 +18,8 @@ export default function Home() {
       rejectUnauthorized: false,
     })
     axios.defaults.httpsAgent = httpsAgent
+    // eslint-disable-next-line no-console
+    console.log(process.env.NODE_ENV, `RejectUnauthorized is disabled.`)
   }
 
   return (

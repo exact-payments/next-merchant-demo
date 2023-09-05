@@ -69,7 +69,7 @@ export default function Checkout() {
         });
 
         exact.on("payment-failed", (payload) => {
-          console.debug(payload);
+          console.error(payload);
         });
         setTimeout(setOrderPosted, 1100);
       })
