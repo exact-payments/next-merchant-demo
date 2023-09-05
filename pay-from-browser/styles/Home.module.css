@@ -139,36 +139,40 @@
   }
 }
 
-.hidden{
+.hidden {
   display: none
 }
 
-.carddivwrapper{
+.carddivwrapper {
   display: grid;
   columns: 2;
 }
 
-.carddiv{
+.carddiv {
   grid-column: span 2;
   margin-bottom: -.25rem;
 }
 
-.switch{
+.switch {
   padding-left: 1rem;
   padding-top: 1rem;
   display: flex;
 }
 
-.switch p{
+.switch p {
   position: flex;
   padding-left: 3.5rem;
   margin-top: .25rem;
 }
-.switchlabelgreen{
+.switchlabelgreen {
   color: #7ac833;
 }
 
 .checkoutdisclaimer {
   text-align: center;
   margin-bottom: -5rem;
+}
+
+.paymentForm {
+  min-width: 500px;
 }

@@ -45,11 +45,7 @@ input[type=email], select {
   padding-bottom: .5rem;
   font-weight: 400;
   color: #000;
-
-
-
 }
-
 
 input[type=submit] {
   width: 100%;
@@ -66,7 +62,6 @@ input[type=submit]:hover {
   background-color: #45a049;
 }
 
-
 * {
   box-sizing: border-box;
 }
@@ -81,11 +76,11 @@ input[type=submit]:hover {
   }
 }
 
-iframe{
+iframe {
   border-width: 0px
 }
 
-label{
+label {
   font-size: 14px;
   line-height: 1.25rem;
   font-weight: 500;
