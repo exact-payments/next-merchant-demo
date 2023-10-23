@@ -3,7 +3,7 @@ This is a template app for Exact's Plant Shop allowing users to add plants to a 
 The checkout page displays a form which uses ExactJS, the payments are made directly in the browser.
 
 You can view a demo of this application running at: 
-https://p2-demo.merchant-portal.one/
+https://merchant-demo.plant-shop.co/
 
 ## Running the Application
 ### Environment
