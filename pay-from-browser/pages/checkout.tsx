@@ -23,7 +23,7 @@ export default function Checkout() {
   const onExactJSReady = useCallback(() => {
     setIsLoading(false)
 
-    axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/postOrders`, { 
+    axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/postOrders`, {
       amount: totalPrice(items), //Price is in cents
     }).then((response) => {
       const newExact = ExactJS(response.data.token)
@@ -39,17 +39,17 @@ export default function Checkout() {
           },
         },
         wallets: true
-      })
+      });
 
       newExact.on("payment-complete", (payload: unknown) => {
         const paymentPayload = payload as ExactJSPaymentPayload
-
+        console.debug(`MERCHANT payment complete: ${JSON.stringify(payload)}`);
         (document.getElementById('payment_id')! as HTMLInputElement).value = paymentPayload.paymentId;
         (document.getElementById('myForm') as HTMLFormElement).submit();
       })
 
       newExact.on("payment-failed", (payload) => {
-        console.debug(payload);
+        console.debug(`MERCHANT payment failed: ${JSON.stringify(payload)}`);
       })
 
       setExact(newExact)
@@ -92,37 +92,37 @@ export default function Checkout() {
                 <label htmlFor="email">Email Address</label>
                 <input type="email" id="email" name="email" autoComplete="email" />
               </div>
-  
+
               <div id="cardElement" className={styles.paymentElement}>
               </div>
-  
+
               <div>
                 <label htmlFor="address">Address</label>
                 <input type="text" id="address" name="address" autoComplete="street-address" />
               </div>
-  
+
               <div>
                 <label htmlFor="apartment">Apartment, suite, etc.</label>
                 <input type="text" id="apartment" name="apartment" />
               </div>
-  
+
               <div>
                 <label htmlFor="city">City</label>
                 <input type="text" id="city" name="city" />
               </div>
-  
+
               <div>
                 <label htmlFor="province">State</label>
                 <input type="text" id="province" name="province" />
               </div>
-  
+
               <div>
                 <label htmlFor="postcode">Postal code</label>
                 <input type="text" id="postcode" name="postcode" autoComplete="postal-code" />
               </div>
-  
+
               <input type="hidden" name="payment_id" id="payment_id"></input>
-  
+
               <div>
                 <input type="submit" name="commit" value="Pay Now" data-disable-with="Pay Now" />
               </div>

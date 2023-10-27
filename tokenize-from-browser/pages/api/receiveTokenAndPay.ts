@@ -5,10 +5,9 @@ import axios from 'axios';
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
-)
-{
+) {
 
-  if (!req.body.token || !req.body.order_id){
+  if (!req.body.token || !req.body.order_id) {
     res.status(400).end()
   }
   console.log("\n\n PAYMENT FORM DATA: \n")
@@ -18,21 +17,21 @@ export default async function handler(
   console.log(req.body.token)
   console.log("\n\n")
 
-    //Here we save orderId to simulate a database
-    process.env.orderId = req.body.order_id
+  //Here we save orderId to simulate a database
+  process.env.orderId = req.body.order_id
 
-    //Here we pay for order on the backend
-    const options = {
-      method: 'POST',
-      url: `https://api.exactpaysandbox.com/account/${process.env.P2_ACCOUNT_ID}/orders/${req.body.order_id}/pay`,
-      headers: {
-        accept: 'application/json', 
-        'content-type': 'application/json',
-        authorization: process.env.APPLICATION_TOKEN
-      },
-      data: {payment_method: {token: req.body.token}}
-    };
-    axios
+  //Here we pay for order on the backend
+  const options = {
+    method: 'POST',
+    url: `https://${process.env.NEXT_PUBLIC_P2_DOMAIN}/account/${process.env.P2_ACCOUNT_ID}/orders/${req.body.order_id}/pay`,
+    headers: {
+      accept: 'application/json',
+      'content-type': 'application/json',
+      authorization: process.env.APPLICATION_TOKEN
+    },
+    data: { payment_method: { token: req.body.token } }
+  };
+  axios
     .request(options)
     .then(function (response) {
       console.log("\n\nRESPONSE FROM API:\n");
@@ -41,5 +40,5 @@ export default async function handler(
     .catch(function (error) {
       console.error(error);
     });
-    res.redirect(302, `/paid`)
+  res.redirect(302, `/paid`)
 }

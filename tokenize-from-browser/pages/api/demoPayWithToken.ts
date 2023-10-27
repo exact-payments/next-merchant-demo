@@ -6,25 +6,25 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const options = {
-      method: 'GET',
-      url: `https://api.exactpaysandbox.com/account/${process.env.accountId}/orders/${process.env.orderId}`,
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: process.env.APPLICATION_TOKEN
-      }
-    };
-  
-     await axios.request(options).then(function (response) {
-      // console.log(response.data);
-       console.log(req.body)
-       res.json(response.data);
-       res.status(200)
+    method: 'GET',
+    url: `https://${process.env.NEXT_PUBLIC_P2_DOMAIN}/account/${process.env.accountId}/orders/${process.env.orderId}`,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: process.env.APPLICATION_TOKEN
+    }
+  };
 
-     }).catch(function (error) {
-       console.error(error);
-       res.status(501)
-       res.end()
-     });
-  
-    // }
+  await axios.request(options).then(function (response) {
+    // console.log(response.data);
+    console.log(req.body)
+    res.json(response.data);
+    res.status(200)
+
+  }).catch(function (error) {
+    console.error(error);
+    res.status(501)
+    res.end()
+  });
+
+  // }
 }

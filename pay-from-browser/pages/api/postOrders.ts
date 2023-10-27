@@ -29,7 +29,6 @@ export default async function handler(
         token: response.data.accessToken.token,
         orderId: response.data.id
       })
-
     })
     .catch((error) => {
       console.error(error);
