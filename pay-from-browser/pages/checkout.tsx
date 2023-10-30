@@ -1,60 +1,77 @@
-import axios from 'axios'
 import { FormEvent, useEffect, useCallback, useState } from "react"
-import { MutatingDots } from "react-loader-spinner"
 
 import { useRouter } from "next/router"
-import Script from 'next/script'
 
 import { useCartState } from "../util/useCartState"
-import { totalPrice, OrderTotal } from "../components/OrderTotal"
+import { OrderTotal } from "../components/OrderTotal"
 
 import styles from '../styles/Home.module.css'
+
 import { Exact, ExactJSPaymentPayload, ExactPaymentForm } from '../types'
 
-const exactJsSource = `https://${process.env.NEXT_PUBLIC_P2_DOMAIN}/js/v1/exact.js`
+let isLoaded = false
 
 export default function Checkout() {
   const [exact, setExact] = useState<Exact | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
 
   const router = useRouter()
-  const items = useCartState().items
+  const store = useCartState()
 
   const onExactJSReady = useCallback(() => {
-    setIsLoading(false)
+    console.log("exactjs")
+    if (isLoaded) {
+      console.log("loaded")
+      const components = exact?.components({ orderId: store.order?.orderId as string })
+      console.debug(components)
+      components?.remount();
+      return
+    }
+    isLoaded = true
 
-    axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/postOrders`, {
-      amount: totalPrice(items), //Price is in cents
-    }).then((response) => {
-      const newExact = ExactJS(response.data.token)
-      const components = newExact.components({ orderId: response.data.orderId })
+    console.log("Instantiating ExactJS")
+    const newExact = ExactJS(store.order?.token as string)
+    const components = newExact.components({ orderId: store.order?.orderId as string })
 
-      components.addCard('cardElement', {
-        label: { position: "above" },
-        style: {
-          default: {
-            padding: '2px',
-            border: "1px solid #ccc",
-            fontSize: "14px",
-          },
+    components.addCard('cardElement', {
+      label: { position: "above" },
+      style: {
+        default: {
+          padding: '2px',
+          border: "1px solid #ccc",
+          fontSize: "14px",
         },
-        wallets: true
-      });
+      }
+    });
 
-      newExact.on("payment-complete", (payload: unknown) => {
-        const paymentPayload = payload as ExactJSPaymentPayload
-        console.debug(`MERCHANT payment complete: ${JSON.stringify(payload)}`);
-        (document.getElementById('payment_id')! as HTMLInputElement).value = paymentPayload.paymentId;
-        (document.getElementById('myForm') as HTMLFormElement).submit();
-      })
+    components.addComponent('addressDiv', 'address', {
+      billingAddress: {
+        type: 'minimal',
+      },
+      label: { position: "above" },
+      style: {
+        default: {
+          padding: '2px',
+          border: "1px solid #ccc",
+          fontSize: "14px",
+        },
+      }
+    });
 
-      newExact.on("payment-failed", (payload) => {
-        console.debug(`MERCHANT payment failed: ${JSON.stringify(payload)}`);
-      })
+    console.debug(components)
 
-      setExact(newExact)
+    newExact.on("payment-complete", (payload: unknown) => {
+      const paymentPayload = payload as ExactJSPaymentPayload
+      console.debug(`MERCHANT payment complete: ${JSON.stringify(payload)}`);
+      (document.getElementById('payment_id')! as HTMLInputElement).value = paymentPayload.paymentId;
+      (document.getElementById('myForm') as HTMLFormElement).submit();
     })
-  }, [])
+
+    newExact.on("payment-failed", (payload) => {
+      console.debug(`MERCHANT payment failed: ${JSON.stringify(payload)}`);
+    })
+
+    setExact(newExact)
+  }, [store.order?.orderId])
 
   const handleSubmit = useCallback((event: FormEvent<ExactPaymentForm>) => {
     event.preventDefault()
@@ -63,14 +80,15 @@ export default function Checkout() {
 
   //Prevent checkout with empty cart
   useEffect(() => {
-    if (!items) {
+    if (!store.order) {
       router.push('/')
     }
-  }, [])
+    console.log(`use effect: ${isLoaded}, ${store.order?.orderId}`)
+    onExactJSReady()
+  }, [store.order?.orderId])
 
   return (
     <>
-      <Script src={exactJsSource} strategy="beforeInteractive" onReady={onExactJSReady} />
       <div className={styles.checkoutdisclaimer}>
         <h1>Demonstration only.</h1>
         <h2>Payments are simulated and no actual funds are transferred.</h2>
@@ -79,56 +97,26 @@ export default function Checkout() {
 
       <main className={styles.main}>
         <OrderTotal />
-        {(isLoading && (
-          <div>
-            <MutatingDots height="100" width="100" color="#4fa94d" secondaryColor='#4fa94d' radius='12.5' ariaLabel="mutating-dots-loading" />
-          </div>
-        ))}
+        <div id="paymentForm" className={styles.paymentForm}>
+          <form id="myForm" action="api/receivePaymentId" method="post" onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="email">Email Address</label>
+              <input type="email" id="email" name="email" autoComplete="email" />
+            </div>
 
-        {(!isLoading && (
-          <div id="paymentForm" className={styles.paymentForm}>
-            <form id="myForm" action="api/receivePaymentId" method="post" onSubmit={handleSubmit}>
-              <div>
-                <label htmlFor="email">Email Address</label>
-                <input type="email" id="email" name="email" autoComplete="email" />
-              </div>
+            <div id="cardElement" className={styles.paymentElement}>
+            </div>
 
-              <div id="cardElement" className={styles.paymentElement}>
-              </div>
+            <div id="addressDiv" className={styles.paymentElement}>
+            </div>
 
-              <div>
-                <label htmlFor="address">Address</label>
-                <input type="text" id="address" name="address" autoComplete="street-address" />
-              </div>
+            <input type="hidden" name="payment_id" id="payment_id"></input>
 
-              <div>
-                <label htmlFor="apartment">Apartment, suite, etc.</label>
-                <input type="text" id="apartment" name="apartment" />
-              </div>
-
-              <div>
-                <label htmlFor="city">City</label>
-                <input type="text" id="city" name="city" />
-              </div>
-
-              <div>
-                <label htmlFor="province">State</label>
-                <input type="text" id="province" name="province" />
-              </div>
-
-              <div>
-                <label htmlFor="postcode">Postal code</label>
-                <input type="text" id="postcode" name="postcode" autoComplete="postal-code" />
-              </div>
-
-              <input type="hidden" name="payment_id" id="payment_id"></input>
-
-              <div>
-                <input type="submit" name="commit" value="Pay Now" data-disable-with="Pay Now" />
-              </div>
-            </form>
-          </div>
-        ))}
+            <div>
+              <input type="submit" name="commit" value="Pay Now" data-disable-with="Pay Now" />
+            </div>
+          </form>
+        </div>
       </main>
     </>
   )

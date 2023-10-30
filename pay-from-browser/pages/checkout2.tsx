@@ -1,94 +1,85 @@
+import axios from 'axios'
+import { FormEvent, useEffect, useCallback, useState } from "react"
+import { MutatingDots } from "react-loader-spinner"
+
+import { useRouter } from "next/router"
+
 import { useCartState } from "../util/useCartState"
 import { totalPrice, OrderTotal } from "../components/OrderTotal"
 
 import styles from '../styles/Home.module.css'
 
-import Script from 'next/script'
-import axios from 'axios'
-import { FormEvent, useEffect } from "react"
-import { MutatingDots } from "react-loader-spinner"
-import { useRouter } from "next/router"
-
 import { Exact, ExactJSPaymentPayload, ExactPaymentForm } from '../types'
 
 export default function Checkout() {
-  let exact: Exact;
+  const [exact, setExact] = useState<Exact | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
 
-  const exactJsSource = `https://${process.env.NEXT_PUBLIC_P2_DOMAIN}/js/v1/exact.js`
+  const router = useRouter()
+  const store = useCartState()
 
-  const items = useCartState().items
+  const onExactJSReady = useCallback(() => {
+    const newExact = ExactJS(store.order?.token as string)
+    const components = newExact.components({ orderId: store.order?.orderId as string })
 
-  const setOrderPosted = () => {
-    (document.getElementById('paymentForm')! as HTMLInputElement).className = styles.paymentForm;
-    (document.getElementById('loading')! as HTMLInputElement).className = styles.hidden;
-  }
+    components.addComponent('cardDiv', 'card-number', {
+      label: { position: "inside" },
+      style: {
+        default: {
+          borderRadius: "10px 10px 0px 0px",
+          borderWidth: "2px 2px 0px 2px",
+          borderColor: "red"
+        }
+      }
+    });
+    components.addComponent('expiryDiv', 'expiry-date', {
+      label: { position: "inside" },
+      style: {
+        default: {
+          borderRadius: "0px 0px 0px 10px",
+          borderWidth: "0px 0px 2px 2px",
+          borderColor: "darkseagreen"
+        }
+      }
+    });
+    components.addComponent('cvdDiv', 'cvd', {
+      label: { position: "inside" },
+      style: {
+        default: {
+          borderRadius: "0px 0px 10px 0px",
+          borderWidth: "0px 2px 2px 0px",
+          borderColor: "blue"
+        }
+      }
+    });
 
-  const onExactJSReady = () => {
-    const url = process.env.NEXT_PUBLIC_BASE_URL + '/api/postOrders'
-    axios.post(url, {
-      amount: totalPrice(items), //Price is in cents
-    }).then(
-      (response) => {
-        exact = ExactJS(response.data.token)
-        const components = exact.components({ orderId: response.data.orderId });
-        components.addComponent('cardDiv', 'card-number', {
-          label: { position: "inside" },
-          style: {
-            default: {
-              borderRadius: "10px 10px 0px 0px",
-              borderWidth: "2px 2px 0px 2px",
-              borderColor: "red"
-            }
-          }
-        });
-        components.addComponent('expiryDiv', 'expiry-date', {
-          label: { position: "inside" },
-          style: {
-            default: {
-              borderRadius: "0px 0px 0px 10px",
-              borderWidth: "0px 0px 2px 2px",
-              borderColor: "darkseagreen"
-            }
-          }
-        });
-        components.addComponent('cvdDiv', 'cvd', {
-          label: { position: "inside" },
-          style: {
-            default: {
-              borderRadius: "0px 0px 10px 0px",
-              borderWidth: "0px 2px 2px 0px",
-              borderColor: "blue"
-            }
-          }
-        });
+    newExact.on("payment-complete", (payload: unknown) => {
+      const paymentPayload = payload as ExactJSPaymentPayload
+      console.debug(`MERCHANT payment complete: ${JSON.stringify(payload)}`);
+      (document.getElementById('payment_id')! as HTMLInputElement).value = paymentPayload.paymentId;
+      (document.getElementById('myForm') as HTMLFormElement).submit();
+    });
 
-        exact.on("payment-complete", (payload: unknown) => {
-          const paymentPayload = payload as ExactJSPaymentPayload
-          (document.getElementById('payment_id')! as HTMLInputElement).value = paymentPayload.paymentId;
-          (document.getElementById('myForm') as HTMLFormElement).submit();
-        });
+    newExact.on("payment-failed", (payload) => {
+      console.debug(`MERCHANT payment failed: ${JSON.stringify(payload)}`);
+    });
 
-        exact.on("payment-failed", (payload) => {
-          console.error(payload);
-        });
-        setTimeout(setOrderPosted, 1100);
-      })
-  }
+    setExact(newExact);
+  }, [])
 
-
-  const handleSubmit = (event: FormEvent<ExactPaymentForm>) => {
+  const handleSubmit = useCallback((event: FormEvent<ExactPaymentForm>) => {
     event.preventDefault()
-    exact.payOrder()
-
-  }
+    exact?.payOrder()
+  }, [exact])
 
   //Prevent checkout with empty cart
-  const router = useRouter()
   useEffect(() => {
-    if (!items) {
+    if (!store.order) {
       router.push('/')
     }
-  })
+    console.log(`use effect: ${store.order?.orderId}`)
+    onExactJSReady()
+  }, [store.order?.orderId])
 
   return (
     <>
@@ -99,12 +90,6 @@ export default function Checkout() {
 
       <main className={styles.main}>
         <OrderTotal />
-        <div id="loading">
-          <MutatingDots height="100" width="100" color="#4fa94d" secondaryColor='#4fa94d' radius='12.5' ariaLabel="mutating-dots-loading" />
-
-          <Script src={exactJsSource} strategy="afterInteractive" onReady={onExactJSReady} />
-        </div>
-
         <div id="paymentForm" className={styles.hidden}>
           <form id="myForm" action="api/receivePaymentId" method="post" onSubmit={handleSubmit}>
             <div>

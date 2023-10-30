@@ -8,6 +8,7 @@ export type Exact = {
   tokenize: () => void
 }
 export type Component = {
+  remount: () => void;
   addCard: (divName: string, payload?: { "style"?: Styling, "wallets"?: boolean, label?: Label }) => void;
   addComponent: (divName: string, divId: string, payload?: { "billingAddress"?: BillingAddress, "style"?: Styling, "wallets"?: boolean, label?: Label }) => void;
 }
@@ -22,7 +23,6 @@ export type ExactJSTokenPayload = {
   expiry_month: string
   expiry_year: string
 }
-
 
 export type BillingAddress = {
   type: string
@@ -56,8 +56,6 @@ export type Style = {
   borderRadius?: string,
   borderWidth?: string,
   borderColor?: string,
-
-
 }
 
 export interface ExactPaymentForm extends HTMLFormElement {
@@ -66,13 +64,13 @@ export interface ExactPaymentForm extends HTMLFormElement {
   }
 }
 
-export type Data = {
+export type Order = {
   token: string,
-  orderId: string
+  orderId: string,
+  totalAmount: number
 }
 
 export type PaymentInfo = {
-
   id: string,
   paymentId: string,
   terminalId: string,
