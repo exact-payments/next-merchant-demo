@@ -12,8 +12,8 @@ const CheckoutButton  = () => {
     return (
       isEmpty ? <></> : <>
       <div className={styles.switch}>
-          <Switch checked={altCheckoutSelected} onChange={setAltCheckoutSelected} onColor='#d8908f' offColor= '#000000' activeBoxShadow='7ac833' uncheckedIcon={false} checkedIcon={false}/>
-          <p className={altCheckoutSelected ? styles.switchlabelgreen :'' }>{altCheckoutSelected ? "2" : "1"}-Pass Payment</p>
+          <Switch checked={altCheckoutSelected} onChange={setAltCheckoutSelected} onColor='#7ac833' offColor= '#000000' activeBoxShadow='7ac833' uncheckedIcon={false} checkedIcon={false}/>
+          <p className={altCheckoutSelected ? styles.switchlabelgreen :'' }>Alternate Checkout UI</p>
       </div>
       <Link href= {altCheckoutSelected ? 'checkout2' : 'checkout'} className={styles.card}>Checkout</Link>
       </>

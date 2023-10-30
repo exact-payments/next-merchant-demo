@@ -8,6 +8,7 @@ The checkout page displays a form which uses ExactJS, this shop uses tokenized p
 This program requires a `.env.local` with the following: 
 - P2_ACCOUNT_ID: Your Account ID
 - APPLICATION_TOKEN: An application token generated for the Exact Payments API
+- NEXT_PUBLIC_P2_DOMAIN: The P2 domain to which API requests should be sent (do not include scheme - HTTPS is mandatory!!), eg: api.exactpaysandbox.com
 - NEXT_PUBLIC_BASE_URL: set to `http://localhost:3000` for local development- something else if you are deploying somewhere.
 
 Run the following to start a development instance of the app.
@@ -90,7 +91,7 @@ We send the user back to the index page if they are in an illegal state for chec
 A copy of the checkout page, but with a bullet ui created by setting individual elements.
 
 #### `paid.tsx`
-A demo post-payment screen.
+A straightforward post-payment screen.
 
 **OPTIONAL:**
 
