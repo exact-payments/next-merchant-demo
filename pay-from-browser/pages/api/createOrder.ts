@@ -1,42 +1,36 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
-import {AxiosRequestConfig} from 'axios'
-
-import {Data} from '../../types'
-
+import { AxiosRequestConfig } from 'axios'
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse
 ) {
-  const options : AxiosRequestConfig = {
+  const options: AxiosRequestConfig = {
     method: 'POST',
-    url: `https://api.exactpaysandbox.com/account/${process.env.P2_ACCOUNT_ID}/orders`,
+    url: `https://${process.env.NEXT_PUBLIC_P2_DOMAIN}/account/${process.env.P2_ACCOUNT_ID}/orders`,
     headers: {
       accept: 'application/json',
       'content-type': 'application/json',
       authorization: process.env.APPLICATION_TOKEN
     },
     data: {
-      ...req.body,
-      reference: {referenceNo: "sample for demo"}
+      amount: req.body.amount,
+      reference: { referenceNo: "sample for demo" }
     }
   };
   await axios
     .request(options)
-    .then( (response) => {
+    .then((response) => {
       res.status(200)
-      console.log(response.data)
       res.json({
-        token : response.data.accessToken.token,
-        orderId : response.data.id
+        token: response.data.accessToken.token,
+        orderId: response.data.id
       })
-
     })
-    .catch( (error) => {
+    .catch((error) => {
       console.error(error);
       res.status(401)
       res.end()
     });
-  
 }

@@ -14,7 +14,7 @@ const Cart: FC<{}> = () => {
   return (
     <>
       {store.items.map(item => {
-        return <CartItem itemnum={item.itemnum} price={0} />
+        return <CartItem key={item.itemnum} itemnum={item.itemnum} price={0} />
       })}
     </>
   )

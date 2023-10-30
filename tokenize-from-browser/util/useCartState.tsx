@@ -1,12 +1,23 @@
 import create from 'zustand';
+import { Order } from '../types';
+
+export type StoreItemProps = {
+  itemnum: string;
+  price: number;
+};
 
 interface ItemState {
-  items: string[];
-  addItem: (item: string) => void;
+  items: StoreItemProps[];
+  order: Order | null;
+  addItem: (item: StoreItemProps) => void;
   removeAllItems: () => void;
+  setOrder: (order: Order) => void;
 }
+
 export const useCartState = create<ItemState>((set) => ({
   items: [],
-  addItem: (item: string) => set((state) => ({ items: [...state.items, item] })),
+  order: null,
+  addItem: (item: StoreItemProps) => set((state) => ({ items: [...state.items, item] })),
   removeAllItems: () => set({ items: [] }),
+  setOrder: (order: Order) => set({ order: order }),
 }));

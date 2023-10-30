@@ -2,11 +2,9 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
 import { AxiosRequestConfig } from 'axios'
 
-import { Data } from '../../types'
-
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse
 ) {
   const options: AxiosRequestConfig = {
     method: 'POST',
@@ -17,7 +15,7 @@ export default async function handler(
       authorization: process.env.APPLICATION_TOKEN
     },
     data: {
-      ...req.body,
+      amount: req.body.amount,
       reference: { referenceNo: "sample for demo" }
     }
   };
@@ -29,7 +27,6 @@ export default async function handler(
         token: response.data.accessToken.token,
         orderId: response.data.id
       })
-
     })
     .catch((error) => {
       console.error(error);
