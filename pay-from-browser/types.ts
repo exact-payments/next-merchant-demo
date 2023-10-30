@@ -5,10 +5,10 @@ export type Exact = {
   components: (order: { orderId: string }) => Component,
   payOrder: () => Promise<string>,
   on: (paymentState: "payment-complete" | "payment-failed", functionCall: (payload: ExactJSPaymentPayload | ExactJSTokenPayload) => void) => void,
-  tokenize: () => void
+  tokenize: () => void,
+  reset: () => void,
 }
 export type Component = {
-  remount: () => void;
   addCard: (divName: string, payload?: { "style"?: Styling, "wallets"?: boolean, label?: Label }) => void;
   addComponent: (divName: string, divId: string, payload?: { "billingAddress"?: BillingAddress, "style"?: Styling, "wallets"?: boolean, label?: Label }) => void;
 }
@@ -91,5 +91,9 @@ export type PaymentInfo = {
 export type TokenInfo = {
   token: string,
   orderId: string,
-  accountId: string
+  accountId: string,
+  cardBrand: string,
+  expiryMonth: string,
+  expiryYear: string,
+  last4: string
 }

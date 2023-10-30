@@ -2,8 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
 import { AxiosRequestConfig } from 'axios'
 
-import { Order } from '../../types'
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

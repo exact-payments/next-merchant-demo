@@ -1,36 +1,23 @@
-import { FormEvent, useEffect, useCallback, useState } from "react"
-
+import { FormEvent, useEffect, useCallback } from "react"
 import { useRouter } from "next/router"
 
 import { useCartState } from "../util/useCartState"
 import { OrderTotal } from "../components/OrderTotal"
+import Disclaimer from "../components/Disclaimer"
 
 import styles from '../styles/Home.module.css'
 
 import { Exact, ExactJSPaymentPayload, ExactPaymentForm } from '../types'
 
-let isLoaded = false
-
 export default function Checkout() {
-  const [exact, setExact] = useState<Exact | null>(null)
+  let exact: Exact | null = null
 
   const router = useRouter()
   const store = useCartState()
 
-  const onExactJSReady = useCallback(() => {
-    console.log("exactjs")
-    if (isLoaded) {
-      console.log("loaded")
-      const components = exact?.components({ orderId: store.order?.orderId as string })
-      console.debug(components)
-      components?.remount();
-      return
-    }
-    isLoaded = true
-
-    console.log("Instantiating ExactJS")
-    const newExact = ExactJS(store.order?.token as string)
-    const components = newExact.components({ orderId: store.order?.orderId as string })
+  const configureExactJS = () => {
+    exact = ExactJS(store.order?.token as string)
+    const components = exact.components({ orderId: store.order?.orderId as string })
 
     components.addCard('cardElement', {
       label: { position: "above" },
@@ -57,44 +44,43 @@ export default function Checkout() {
       }
     });
 
-    console.debug(components)
-
-    newExact.on("payment-complete", (payload: unknown) => {
+    exact.on("payment-complete", (payload: unknown) => {
       const paymentPayload = payload as ExactJSPaymentPayload
       console.debug(`MERCHANT payment complete: ${JSON.stringify(payload)}`);
       (document.getElementById('payment_id')! as HTMLInputElement).value = paymentPayload.paymentId;
       (document.getElementById('myForm') as HTMLFormElement).submit();
     })
 
-    newExact.on("payment-failed", (payload) => {
+    exact.on("payment-failed", (payload) => {
       console.debug(`MERCHANT payment failed: ${JSON.stringify(payload)}`);
     })
-
-    setExact(newExact)
-  }, [store.order?.orderId])
+  }
 
   const handleSubmit = useCallback((event: FormEvent<ExactPaymentForm>) => {
     event.preventDefault()
     exact?.payOrder()
   }, [exact])
 
-  //Prevent checkout with empty cart
+  const cleanupExactJS = () => {
+    exact?.reset();
+    exact = null
+  }
+
   useEffect(() => {
-    if (!store.order) {
+    if (store.order === null) {
+      // order not created => send home
       router.push('/')
+    } else {
+      configureExactJS()
+      return () => {
+        cleanupExactJS();
+      }
     }
-    console.log(`use effect: ${isLoaded}, ${store.order?.orderId}`)
-    onExactJSReady()
-  }, [store.order?.orderId])
+  }, [])
 
   return (
     <>
-      <div className={styles.checkoutdisclaimer}>
-        <h1>Demonstration only.</h1>
-        <h2>Payments are simulated and no actual funds are transferred.</h2>
-        <h2><a href="https://developer.exactpay.com/docs/Sandbox-Test-Cards" target="_blank">TEST CARDS</a></h2>
-      </div>
-
+      <Disclaimer />
       <main className={styles.main}>
         <OrderTotal />
         <div id="paymentForm" className={styles.paymentForm}>
