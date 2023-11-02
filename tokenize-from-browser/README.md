@@ -9,7 +9,7 @@ This program requires a `.env.local` with the following:
 - P2_ACCOUNT_ID: Your Account ID
 - APPLICATION_TOKEN: An application token generated for the Exact Payments API
 - NEXT_PUBLIC_P2_DOMAIN: The P2 domain to which API requests should be sent (do not include scheme - HTTPS is mandatory!!), eg: api.exactpaysandbox.com
-- NEXT_PUBLIC_BASE_URL: set to `http://localhost:3000` for local development- something else if you are deploying somewhere.
+- NEXT_PUBLIC_BASE_URL: set to `http://localhost:4000` for local development- something else if you are deploying somewhere.
 
 Run the following to start a development instance of the app.
 ```bash
@@ -18,7 +18,7 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:4000](http://localhost:4000) with your browser to see the result.
 
 ## About the Application
 ### This application is built with nextJS 
