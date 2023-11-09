@@ -32,7 +32,7 @@ export default function Checkout() {
 
     components.addComponent('addressDiv', 'address', {
       billingAddress: {
-        type: 'minimal',
+        type: 'full',
       },
       label: { position: "above" },
       style: {
