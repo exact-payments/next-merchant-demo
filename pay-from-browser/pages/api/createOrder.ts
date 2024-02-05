@@ -19,9 +19,12 @@ export default async function handler(
       reference: { referenceNo: "sample for demo" }
     }
   };
+  console.log("Making API request")
   await axios
     .request(options)
     .then((response) => {
+      console.debug(response.status)
+      console.debug(response.data)
       res.status(200)
       res.json({
         token: response.data.accessToken.token,
