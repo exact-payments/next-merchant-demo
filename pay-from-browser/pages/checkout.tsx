@@ -20,6 +20,7 @@ export default function Checkout() {
     const components = exact.components({ orderId: store.order?.orderId as string })
 
     components.addCard('cardElement', {
+      wallets: true,
       label: { position: "above" },
       style: {
         default: {
@@ -85,16 +86,10 @@ export default function Checkout() {
         <OrderTotal />
         <div id="paymentForm" className={styles.paymentForm}>
           <form id="myForm" action="api/receivePaymentId" method="post" onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="email">Email Address</label>
-              <input type="email" id="email" name="email" autoComplete="email" />
-            </div>
 
-            <div id="cardElement" className={styles.paymentElement}>
-            </div>
+            <div id="cardElement" className={styles.paymentElement}></div>
 
-            <div id="addressDiv" className={styles.paymentElement}>
-            </div>
+            <div id="addressDiv" className={styles.paymentElement}></div>
 
             <input type="hidden" name="payment_id" id="payment_id"></input>
 

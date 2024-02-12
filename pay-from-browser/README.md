@@ -82,7 +82,7 @@ We are loading ExactJS here via a `<Script>` tag, and calling `onExactJSReady()`
 
 We display a loading icon, to dissapear after ExactJS loads.
 
-We display a form with sections for email address, street address, apartment, city, province, postal code. The form is initially hidden.
+We display a form with sections for street address, apartment, city, province, postal code. The form is initially hidden.
 
 The form calls `handleSubmit()` when submitted and `api/receivePaymentId` when the payment is completed.
 
